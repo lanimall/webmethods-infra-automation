@@ -1,0 +1,291 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_apigateway_secrets.yaml"
+  tags:
+    - always
+
+################################################################
+## Prep
+################################################################
+
+## make sure terracotta is started, otherwise the gateway process may not start properly 
+## if it's set in a cluster already (which could happen if this script is re-run on top of a running clustered gateway node)
+- hosts: $(stackid)apigateway
+  become: true
+  tasks:
+    - import_role: 
+        name: service-webmethods
+      vars:
+        product_command: "start"
+        product_name: "terracotta"
+    - name: Wait for validation ports to become open on the host, don't start checking for 2 seconds
+      wait_for:
+        port: "{{ item }}"
+        delay: 2
+        timeout: 60
+      with_items:
+        - 9530
+        - 9540
+  tags:
+    - pre-install
+    - pre-install-terracotta-start
+
+################################################################
+## API Gateway runtime
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_template: apigateway/template-runtime-dsl1.1.yaml
+    cce_provisioning_properties: apigateway-runtime
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_apigateway }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_apigateway }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_apigateway }}"
+      - name: "agw.instance.type"
+        value: "integrationServer"
+      - name: "agw.instance.name"
+        value: "apigateway"
+      - name: "agw.memory.init"
+        value: "2048"
+      - name: "agw.memory.max"
+        value: "4096"
+      - name: "agw.key.license.alias"
+        value: "*_YAIAA_10.*_*_*"
+  tags:
+    - install
+    - install-runtime
+
+- import_playbook: sagenv-common-webmethods-postinstall-spm.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: apigateway
+    cce_provisioning_installed_product_instance_names: apigateway
+    cce_provisioning_validation_ports:
+      - 5555
+      - 9072
+      - 9999
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+################################################################
+## API Gateway terracotta clustering
+################################################################
+
+## make sure terracotta is started again just in case something happened before now
+- import_playbook: sagenv-common-webmethods-check-service-running.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: terracotta
+    cce_provisioning_validation_ports:
+      - 9530
+      - 9540
+  tags:
+    - install
+    - install-configs
+    - install-configs-clustering
+    - install-configs-clustering-enforce-terracotta-started
+
+## make sure api gateway is started again just in case something happened before now
+- import_playbook: sagenv-common-webmethods-check-service-running.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: apigateway
+    cce_provisioning_installed_product_instance_names: apigateway
+    cce_provisioning_validation_ports:
+      - 5555
+      - 9072
+      - 9999
+  tags:
+    - install
+    - install-configs
+    - install-configs-clustering
+    - install-configs-clustering-enforce-apigateway-started
+
+##construct terracotta url based on inventory
+- import_playbook: sagenv-common-inventory.yaml
+  vars:
+    cce_provisioning_inventory_inventory_scope: commandcentral
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_inventory_hosts_add_prefix: ""
+    cce_provisioning_inventory_hosts_add_suffix: ":9510"
+    cce_provisioning_inventory_hosts_join_string: ","
+    cce_provisioning_inventory_hosts_var: "external_target_terracotta_url"
+  tags:
+    - install
+    - install-configs
+    - install-configs-clustering
+    - install-configs-clustering-terracotta-url
+
+##setup gateway clustering
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_template: apigateway/configs/template-clustering.yaml
+    cce_provisioning_properties: apigateway-configs-clustering
+    cce_provisioning_template_params:
+      - name: "agw.instance.type"
+        value: "integrationServer"
+      - name: "agw.instance.name"
+        value: "apigateway"
+      - name: "agw.terracotta.key.license.alias"
+        value: "*TerraCotta_v4_Clustering_IS_terracotta-license.key"
+      - name: "agw.terracotta.url"
+        value: "{{ external_target_terracotta_url | default('undefined') }}"
+  tags:
+    - install
+    - install-configs
+    - install-configs-clustering
+    - install-configs-clustering-apigatewaysetup
+
+################################################################
+## API Gateway external elastic search
+################################################################
+
+##some post install items for gateway  (stop local internal data store, update configs, restart gateway)
+- hosts: $(stackid)apigateway
+  become: true
+  become_user: "{{ webmethods_user }}"
+  tasks:
+    ## stopping for good the local elastic search that was installed by the template...it's useless
+    - import_role: 
+        name: command-webmethods
+      vars:
+        product_command: "stop"
+        product_name: "internaldatastore"
+    
+    ## update the elastic search configs in gateway
+    - import_role: 
+        name: apigateway-set-external-elasticsearch
+      vars:
+        elasticsearch_inventory_pattern: $(stackid)internaldatastore
+        elasticsearch_inventory_hosts_property: "{{ cce_provisioning_inventory_hosts_property }}"
+        elasticsearch_proto: http
+        elasticsearch_port: 9240
+        product_instance_name: "apigateway"
+  tags:
+    - install
+    - install-configs
+    - install-configs-external-elasticsearch
+    - install-configs-external-elasticsearch-update-configs
+
+## create Kibana startup service with the new elastic search configs
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: apigatewaykibana
+    cce_provisioning_installed_product_instance_names: apigateway
+    cce_provisioning_postinstall_webmethods: false
+    cce_provisioning_validation_ports:
+      - 9405
+  tags:
+    - install
+    - install-configs
+    - install-configs-external-elasticsearch
+    - install-configs-external-elasticsearch-apigatewaykibana
+
+## make sure api gateway is RE-started again to apply the changes
+- import_playbook: sagenv-common-webmethods-check-service-running.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: apigateway
+    cce_provisioning_installed_product_instance_names: apigateway
+    cce_provisioning_force_restart: true
+    cce_provisioning_validation_ports:
+      - 5555
+      - 9072
+      - 9999
+  tags:
+    - install
+    - install-configs
+    - install-configs-external-elasticsearch
+    - install-configs-external-elasticsearch-enforce-apigateway-restarted
+
+################################################################
+## API Gateway misc configs
+################################################################
+
+## make sure api gateway is started again just in case something happened before now
+- import_playbook: sagenv-common-webmethods-check-service-running.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: apigateway
+    cce_provisioning_installed_product_instance_names: apigateway
+    cce_provisioning_validation_ports:
+      - 5555
+      - 9072
+      - 9999
+  tags:
+    - install
+    - install-configs
+    - install-configs-misc
+    - install-configs-misc-enforce-apigateway-started
+
+##customize gateway user passwords
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_template: apigateway/configs/template-users.yaml
+    cce_provisioning_properties: apigateway-configs-users
+    cce_provisioning_template_params:
+      - name: "agw.instance.type"
+        value: "integrationServer"
+      - name: "agw.instance.name"
+        value: "apigateway"
+    cce_provisioning_template_params_secure:
+      - name: "agw.administrator.password"
+        value: "{{ apigw_administrator_password }}"
+  tags:
+    - install
+    - install-configs
+    - install-configs-misc
+    - install-configs-misc-users
+
+################################################################
+## final restart
+################################################################
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_postinstall_webmethods: false
+    cce_provisioning_postinstall_service_setup: false
+    cce_provisioning_postinstall_reboot: true
+    cce_provisioning_validation_ports:
+      - 5555
+      - 9072
+      - 9999
+      - 8092
+      - 8093
+      - 9530
+      - 9540
+      - 9405
+  tags:
+    - install
+    - install-final

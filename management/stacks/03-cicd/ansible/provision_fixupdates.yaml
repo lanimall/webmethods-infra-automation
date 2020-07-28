@@ -1,0 +1,29 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## perform fix apply on all components
+################################################################
+
+- import_playbook: sagenv-common-updates.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)
+    cce_provisioning_template_params:
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_sdc }}"
+      - name: "products.fixes"
+        value: "ALL"
+  tags:
+    - updates

@@ -1,0 +1,42 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## SPM bootstrapping full stack
+################################################################
+
+- import_playbook: sagenv-common-spm-bootstrap-aliasmapping.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+  tags:
+    - integrationserver
+
+- import_playbook: sagenv-common-spm-bootstrap-aliasmapping.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)tnserver
+  tags:
+    - tnserver
+
+- import_playbook: sagenv-common-spm-bootstrap-aliasmapping.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)mws
+  tags:
+    - mws
+
+- import_playbook: sagenv-common-spm-bootstrap-aliasmapping.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+  tags:
+    - universalmessaging

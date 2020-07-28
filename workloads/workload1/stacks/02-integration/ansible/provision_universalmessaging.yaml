@@ -1,0 +1,175 @@
+---
+
+################################################################
+## load the needed vars
+################################################################
+ 
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## UM runtime first
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_template: universalmessaging/template-runtime-dsl1.1.yaml
+    cce_provisioning_properties: universalmessaging-runtime-dsl1.1
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_universalmessaging }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_universalmessaging }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_universalmessaging }}"
+      - name: "um.memory.init"
+        value: "2048"
+      - name: "um.memory.max"
+        value: "4096"
+      - name: "um.license.key.alias"
+        value: "*_NUMWF_10.*_*_*"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_umserver }}"
+      - name: "um.instance.name"
+        value: "{{ webmethods_um_instance_name }}"
+  tags:
+    - install
+    - install-runtime
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_installed_product_names: universalmessaging
+    cce_provisioning_installed_product_instance_names: umserver
+    cce_provisioning_validation_ports:
+      - 9000
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+################################################################
+## Configs
+################################################################
+
+################################################################
+## Create cluster
+################################################################
+
+### add cluster port
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_template: universalmessaging/configs/template-port.yaml
+    cce_provisioning_properties: universalmessaging-configs-port
+    cce_provisioning_template_params:
+      - name: "um.instance.name"
+        value: "{{ webmethods_um_instance_name }}"
+      - name: "um.instance.port.alias"
+        value: "nsp0"
+      - name: "um.instance.port.binding"
+        value: ""
+      - name: "um.instance.port.protocol"
+        value: "NSP"
+      - name: "um.instance.port.number"
+        value: "9999"
+      - name: "um.instance.port.autostart"
+        value: "true"
+      - name: "um.instance.port.allowforinterrealm"
+        value: "true"
+      - name: "um.instance.port.enableNIO"
+        value: "true"
+      - name: "um.instance.port.advertise"
+        value: "false"
+      - name: "um.instance.port.allowclientconnections"
+        value: "true"      
+      - name: "um.instance.port.enablePolicyServer"
+        value: "false"    
+      - name: "um.instance.port.acceptThreads"
+        value: "5"
+      - name: "um.instance.port.selectThreads"
+        value: "10"  
+  tags:
+    - install
+    - install-configs
+    - install-configs-ports
+
+### create cluster
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_template: universalmessaging/template-runtime-cluster-dsl1.1.yaml
+    cce_provisioning_properties: universalmessaging-runtime-cluster-dsl1.1
+    cce_provisioning_template_params:
+      - name: "um.instance.name"
+        value: "{{ webmethods_um_instance_name }}"
+      - name: "um.cluster.name"
+        value: "umcluster"
+      - name: "um.cluster.port"
+        value: "9999"
+  tags:
+    - install
+    - install-configs
+    - install-configs-cluster
+
+
+################################################################
+## Content
+################################################################
+
+##construct the um url
+- import_playbook: sagenv-common-inventory.yaml
+  vars:
+    cce_provisioning_inventory_inventory_scope: commandcentral
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_inventory_hosts_add_prefix: "nsp://"
+    cce_provisioning_inventory_hosts_add_suffix: ":9000"
+    cce_provisioning_inventory_hosts_join_string: ","
+    cce_provisioning_inventory_hosts_var: "external_target_um_url"
+  tags:
+    - install
+    - install-content
+    - install-content-cf
+
+## create the default connection factory
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_template: universalmessaging/configs/template-jms-connfactory.yaml
+    cce_provisioning_properties: universalmessaging-configs-jms-connfactory
+    cce_provisioning_template_params:
+      - name: "um.instance.name"
+        value: "{{ webmethods_um_instance_name }}"
+      - name: "um.jndi.cf.name"
+        value: "{{ cce_provisioning_um_jndi_cf_name }}"
+      - name: "um.jndi.cf.url"
+        value: "{{ external_target_um_url | default('undefined') }}"
+      - name: "um.jndi.cf.type"
+        value: "Shared"
+  tags:
+    - install
+    - install-content
+    - install-content-cf
+
+################################################################
+## final restart
+################################################################
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_postinstall_webmethods: false
+    cce_provisioning_postinstall_service_setup: false
+    cce_provisioning_postinstall_reboot: true
+    cce_provisioning_validation_ports:
+      - 9000
+  tags:
+    - install
+    - install-final

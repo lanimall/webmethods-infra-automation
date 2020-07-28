@@ -1,0 +1,19 @@
+---
+
+################################################################
+## Terracotta provisioning
+################################################################
+
+- import_playbook: $(stackid)_provision_terracotta.yaml
+
+################################################################
+## Elastic search provisioning
+################################################################
+
+- import_playbook: $(stackid)_provision_internaldatastore.yaml
+
+################################################################
+## API Gateway provisioning
+################################################################
+
+- import_playbook: $(stackid)_provision_apigateway.yaml

@@ -1,0 +1,122 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_apiportal_secrets.yaml"
+  tags:
+    - always
+
+## Install with installer instead of CCE (This should install portal / spm)
+- import_playbook: sagenv-common-webmethods-with-installer.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apiportal
+    provision_installer_product_name: apiportal
+    provision_installer_product_dir: "{{ webmethods_install_dir }}"
+    provision_installer_dir: "/opt/softwareag/installer_content/"
+    provision_installer_files_owner: "{{ webmethods_user }}"
+    provision_installer_files_group: "{{ webmethods_group }}"
+    provision_installer_exec_filename: "SoftwareAGInstaller20191216-LinuxX86.bin"
+    provision_installer_exec_filepath_local: "{{ cce_provisioning_content_localpath }}/installers/SoftwareAGInstaller20191216-LinuxX86.bin"
+    provision_installer_image_filepath_local: "{{ cce_provisioning_content_localpath }}/images/products/softwareag_105_apiportal_linux_x64.zip"
+    provision_installer_license_filepath_local: "{{ cce_provisioning_content_localpath }}/licenses/sag_licenses_105/webmethods/API Portal v10.5/0000489922_APIPortal101.xml"
+
+## this is to make sure Portal ACC service is created and started
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apiportal
+    cce_provisioning_installed_product_names: apiportalacc
+    cce_provisioning_postinstall_webmethods: true
+    cce_provisioning_postinstall_service_setup: true
+    cce_provisioning_postinstall_reboot: false
+    cce_provisioning_validation_ports:
+      - 18011
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+## this is to make sure SPM service is created and started
+- import_playbook: sagenv-common-webmethods-postinstall-spm.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apiportal
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+################################################################
+## SPM bootstrapping - this fails due to password mismatch...i need to be able to register and change password at same time
+################################################################
+
+# - import_playbook: sagenv-common-spm-bootstrap-aliasmapping.yaml
+#   vars:
+#     cce_provisioning_inventory_hosts_pattern: $(stackid)apiportal
+#   tags:
+#     - install
+#     - install-spm
+
+
+################################################################
+## API Portal post install tasks
+################################################################
+
+## make sure api portal ACC agent is runing
+- import_playbook: sagenv-common-webmethods-check-service-running.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apiportal
+    cce_provisioning_installed_product_names: apiportalacc
+    cce_provisioning_validation_ports:
+      - 18011
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+    - install-runtime-postinstall-enforce-apiportal-agent-started
+
+- hosts: $(stackid)apiportal
+  become: true
+  become_user: "{{ webmethods_user }}"
+  tasks:
+    - import_role: 
+        name: post-install-apiportal
+      vars:
+        postinstall_action: set_autostart
+      become: true
+      
+    - import_role: 
+        name: post-install-apiportal
+      vars:
+        postinstall_action: set_loadbalancer
+      become: true
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+################################################################
+## final restart
+################################################################
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apiportal
+    cce_provisioning_postinstall_webmethods: false
+    cce_provisioning_postinstall_service_setup: false
+    cce_provisioning_postinstall_reboot: true
+    cce_provisioning_validation_ports:
+      - 18101
+      - 8092
+      - 8093
+  tags:
+    - install
+    - install-final

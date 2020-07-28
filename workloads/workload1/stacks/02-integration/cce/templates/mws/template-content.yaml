@@ -1,0 +1,87 @@
+alias: stack3-mws-content
+description: My webMethods Server Content
+
+environments:
+  default:
+    # My webMethods Server
+    mws.instance.name:           ${}
+    mws.administrator.user:      "Administrator"
+    mws.administrator.password:  ${}
+    mws.administrator.email:     ${}
+    
+    mws.wsclient.user:     ${mws.administrator.user}
+    mws.wsclient.password: ${mws.administrator.password}
+
+    ###### MWS Targets
+    
+    # um
+    mws.target.um.url:              ${}
+
+    # tn
+    mws.target.tn.configname:       "tnservers"
+    mws.target.tn.host:             ${}
+    mws.target.tn.port:             ${}
+    mws.target.tn.conn_secured:     ${}
+
+    # Inline templates to apply
+    templates.apply: [users,configs,tn]
+
+layers:
+  runtime:
+    templates: ${templates.apply}
+
+templates:
+  users:
+    description: MWS Users Configs
+    products:
+      MwsProgramFiles:
+        ${mws.instance.name}:
+          configuration:
+            MwsProgramFiles-${mws.instance.name}:
+              COMMON-LOCAL-USERS:
+                COMMON-LOCAL-USERS-${mws.administrator.user}:
+                  "@id": ${mws.administrator.user}
+                  Enabled: true
+                  FirstName: My webMethods Administrator
+                  LastName:  Administrator
+                  Email:     ${mws.administrator.email}
+                  Password:  ${mws.administrator.password}
+
+  configs:
+    description: Mics MWS configs
+    products:
+      MwsProgramFiles:
+        ${mws.instance.name}:
+          configuration:
+            MwsProgramFiles-${mws.instance.name}:
+              COMMON-VARS:
+                COMMON-VARS-wsclient-password:
+                  Variable:
+                    "@key": "wsclient-password"
+                    "@secure": "true"
+                    "@type": "java.lang.String"
+                    $: ${mws.wsclient.password}
+                COMMON-VARS-wsclient-username:
+                  Variable:
+                    "@key": "wsclient-username"
+                    "@secure": "false"
+                    "@type": "java.lang.String"
+                    $: ${mws.wsclient.user}
+  
+  tn:
+    description: TN configs
+    products:
+      TNPortal:
+        OSGI-MWS_default:
+          configuration:
+            TNPortal-default:
+              TN-SERVER-CONFIGURATIONS:
+                ${mws.target.tn.configname}:
+                  '@name': ${mws.target.tn.configname}
+                  host: ${mws.target.tn.host}
+                  port: '${mws.target.tn.port}'
+                  secured: '${mws.target.tn.conn_secured}'
+
+provision:
+  default:
+    runtime: ${nodes}

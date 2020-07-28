@@ -1,0 +1,139 @@
+---
+
+################################################################
+## load the needed vars
+################################################################
+ 
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_dbserver_secrets.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_mws_secrets.yaml"
+  tags:
+    - always
+
+################################################################
+## MWS runtime
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)mws
+    cce_provisioning_template: mws/template-runtime-dsl1.1.yaml
+    cce_provisioning_properties: mws-runtime-dsl1.1
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_mws }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_mws }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_mws }}"
+      - name: "mws.memory.init"
+        value: "2048"
+      - name: "mws.memory.max"
+        value: "4096"
+      - name: "mws.instance.name"
+        value: "{{ webmethods_mws_instance_name }}"
+      - name: "mws.lb.host"
+        value: "{{ webmethods_mws_loadbalancer_fqdn }}"
+      - name: "mws.lb.http.port"
+        value: "{{ webmethods_mws_loadbalancer_http_port }}"
+      - name: "mws.lb.https.port"
+        value: "{{ webmethods_mws_loadbalancer_https_port }}"
+      - name: "db.host"
+        value: "{{ dbserver_host }}"       
+      - name: "db.port"
+        value: "{{ dbserver_port }}"
+      - name: "db.name"
+        value: "{{ mws_db_name }}"
+      - name: "db.username"
+        value: "{{ mws_db_username }}"
+    cce_provisioning_template_params_secure:
+      - name: "db.password"
+        value: "{{ mws_db_password }}"
+  tags:
+    - install
+    - install-mws
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)mws
+    cce_provisioning_installed_product_names: mws
+    cce_provisioning_installed_product_instance_names: default
+    cce_provisioning_validation_ports:
+      - 8585
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+################################################################
+## MWS components
+################################################################
+
+
+################################################################
+## MWS configs
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)mws
+    cce_provisioning_template: mws/configs/template-update-builtin-users.yaml
+    cce_provisioning_properties: mws-configs-update-builtin-users
+    cce_provisioning_template_params:
+      - name: "mws.instance.name"
+        value: "{{ webmethods_mws_instance_name }}"
+      - name: "mws.administrator.email"
+        value: "admin@softwareaggov.com"
+    cce_provisioning_template_params_secure:
+      - name: "mws.administrator.password"
+        value: "{{ mws_administrator_password }}"
+      - name: "mws.sysadmin.password"
+        value: "{{ mws_sysadmin_password }}"
+  tags:
+    - install
+    - install-mws-configs
+    - install-mws-configs-update-builtin-users
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)mws
+    cce_provisioning_template: mws/configs/template-tn.yaml
+    cce_provisioning_properties: mws-configs-tn
+    cce_provisioning_template_params:
+      - name: "mws.instance.name"
+        value: "{{ webmethods_mws_instance_name }}"
+      - name: "mws.target.tn.host"
+        value: "{{ webmethods_mws_targets_tn_host }}"
+      - name: "mws.target.tn.port"
+        value: "{{ webmethods_mws_targets_tn_port }}"
+      - name: "mws.target.tn.conn_secured"
+        value: "{{ webmethods_mws_targets_tn_secured }}"
+  tags:
+    - install
+    - install-mws-configs
+    - install-mws-configs-tn
+
+################################################################
+## final restart
+################################################################
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)mws
+    cce_provisioning_postinstall_webmethods: false
+    cce_provisioning_postinstall_service_setup: false
+    cce_provisioning_postinstall_reboot: true
+    cce_provisioning_validation_ports:
+      - 8585
+  tags:
+    - install
+    - install-final

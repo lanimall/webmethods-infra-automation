@@ -1,0 +1,37 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## SPM command task
+################################################################
+
+- import_playbook: sagenv-tools-command-spm.yaml
+  vars:
+    inventory_groupnames: $(stackid)deployer
+    checkport_inventory_hosts_property: fqdn
+  tags:
+    - deployer-spm
+    
+################################################################
+## SPM command task
+################################################################
+
+- import_playbook: sagenv-tools-command-integrationserver.yaml
+  vars:
+    inventory_groupnames: $(stackid)deployer
+    product_instance_name: "{{ webmethods_deployer_is_instance_name }}"
+    checkport_inventory_hosts_property: fqdn
+  tags:
+    - deployer-runtime

@@ -1,0 +1,23 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## SPM command task
+################################################################
+
+- import_playbook: sagenv-tools-command-internaldatastore.yaml
+  vars:
+    inventory_groupnames: $(stackid)internaldatastore
+    checkport_inventory_hosts_property: fqdn

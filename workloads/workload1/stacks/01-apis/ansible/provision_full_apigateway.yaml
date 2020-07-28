@@ -1,0 +1,7 @@
+---
+
+- import_playbook: $(stackid)_provision_terracotta.yaml
+
+- import_playbook: $(stackid)_provision_internaldatastore.yaml
+
+- import_playbook: $(stackid)_provision_apigateway.yaml

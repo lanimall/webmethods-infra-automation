@@ -1,0 +1,24 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## SPM command task
+################################################################
+
+- import_playbook: sagenv-tools-command-apigateway.yaml
+  vars:
+    inventory_groupnames: $(stackid)apigateway
+    product_instance_name: apigateway
+    checkport_inventory_hosts_property: fqdn

@@ -1,0 +1,243 @@
+---
+
+################################################################
+## load the needed vars
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_dbserver_secrets.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_iscore_secrets.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_mws_secrets.yaml"
+  tags:
+    - always
+
+################################################################
+## Integration server runtime
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_template: integrationserver/template-runtime-extdb-dsl1.1.yaml
+    cce_provisioning_properties: integrationserver-runtime-extdb-dsl1.1
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_is }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_is }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_integserver_isruntime }}"
+      - name: "is.memory.init"
+        value: "2048"
+      - name: "is.memory.max"
+        value: "6144"
+      - name: "is.instance.name"
+        value: "{{ webmethods_iscore_instance_name }}"
+      - name: "is.key.license.alias"
+        value: "*_PIE_10.*_*_*"
+      - name: "db.host"
+        value: "{{ dbserver_host }}"       
+      - name: "db.port"
+        value: "{{ dbserver_port }}"
+      - name: "db.name"
+        value: "{{ is_db_name }}"
+      - name: "db.username"
+        value: "{{ is_db_username }}"
+    cce_provisioning_template_params_secure:
+      - name: "db.password"
+        value: "{{ is_db_password }}"
+      - name: "administrator.password"
+        value: "{{ is_administrator_password }}"
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-iscore
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_installed_product_names: integrationserver
+    cce_provisioning_installed_product_instance_names: default
+    cce_provisioning_validation_ports:
+      - 5555
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall
+
+################################################################
+## Integration server components
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_template: integrationserver/components/template-cloudstreams.yaml
+    cce_provisioning_properties: integrationserver-components-common
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_cloudstreams }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_cloudstreams }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_integserver_cloudstreams }}"
+      - name: "is.instance.name"
+        value: "{{ webmethods_iscore_instance_name }}"
+  tags:
+    - install
+    - install-integrationserver-components
+    - install-integrationserver-cloudstreams
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_installed_product_names: cloudstreams
+    cce_provisioning_postinstall_webmethods: true
+    cce_provisioning_postinstall_service_setup: true
+    cce_provisioning_postinstall_reboot: false
+    cce_provisioning_validation_ports:
+      - 5555
+  tags:
+    - install
+    - install-integrationserver-components
+    - install-integrationserver-cloudstreams-postinstall
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_template: integrationserver/components/template-adapters-jdbc.yaml
+    cce_provisioning_properties: integrationserver-components-common
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_is }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_is }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_integserver_adapters }}"
+      - name: "is.instance.name"
+        value: "{{ webmethods_iscore_instance_name }}"
+  tags:
+    - install
+    - install-integrationserver-components
+    - install-integrationserver-adapters
+
+
+###############################################################
+# Integration server configs - central users
+###############################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_template: integrationserver/configs/template-centralusers.yaml
+    cce_provisioning_properties: integrationserver-configs-centralusers
+    cce_provisioning_template_params:
+      - name: "is.instance.name"
+        value: "{{ webmethods_iscore_instance_name }}"
+      - name: "db.host"
+        value: "{{ dbserver_host }}"       
+      - name: "db.port"
+        value: "{{ dbserver_port }}"
+      - name: "db.name"
+        value: "{{ mws_db_name }}"
+      - name: "db.username"
+        value: "{{ mws_db_username }}"
+    cce_provisioning_template_params_secure:
+      - name: "db.password"
+        value: "{{ mws_db_password }}"
+  tags:
+    - install
+    - install-integrationserver-configs
+    - install-integrationserver-centralusers
+
+################################################################
+# Integration server configs - messaging
+################################################################
+
+## Construct the um url
+- import_playbook: sagenv-common-inventory.yaml
+  vars:
+    cce_provisioning_inventory_inventory_scope: commandcentral
+    cce_provisioning_inventory_hosts_pattern: $(stackid)universalmessaging
+    cce_provisioning_inventory_hosts_add_prefix: "nsp://"
+    cce_provisioning_inventory_hosts_add_suffix: ":9000"
+    cce_provisioning_inventory_hosts_join_string: ","
+    cce_provisioning_inventory_hosts_var: "external_target_um_url"
+  tags:
+    - install
+    - install-configs
+    - install-configs-messaging
+    - install-configs-messaging-jms-url
+
+## create JNDI connection
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_template: integrationserver/configs/template-messaging-jms-jndi.yaml
+    cce_provisioning_properties: integrationserver-configs-messaging-jms-jndi-defaults
+    cce_provisioning_template_params:
+      - name: "is.instance.name"
+        value: "{{ webmethods_iscore_instance_name }}"
+      - name: "jndi.alias"
+        value: "{{ cce_provisioning_isclient_shared_jndi_alias }}"
+      - name: "jndi.description"
+        value: "{{ cce_provisioning_isclient_shared_jndi_description }}"
+      - name: "jndi.provider.url"
+        value: "{{ external_target_um_url | default('undefined') }}"
+  tags:
+    - install
+    - install-configs
+    - install-configs-messaging
+    - install-configs-messaging-jms-jndi
+
+## create JMS connection
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_template: integrationserver/configs/template-messaging-jms-connection.yaml
+    cce_provisioning_properties: integrationserver-configs-messaging-jms-connection-defaults
+    cce_provisioning_template_params:
+      - name: "is.instance.name"
+        value: "{{ webmethods_iscore_instance_name }}"
+      - name: "jms.connection.alias"
+        value: "{{ cce_provisioning_isclient_shared_jms_connection_alias }}"
+      - name: "jms.connection.description"
+        value: "{{ cce_provisioning_isclient_shared_jms_connection_description }}"
+      - name: "jms.connection.jndi.alias"
+        value: "{{ cce_provisioning_isclient_shared_jndi_alias }}"
+      - name: "jms.connection.clientid"
+        value: "{{ cce_provisioning_isclient_iscore_jms_connection_clientid }}"
+      - name: "jms.connection.jndi.factory.name"
+        value: "{{ cce_provisioning_um_jndi_cf_name }}"
+  tags:
+    - install
+    - install-configs
+    - install-configs-messaging
+    - install-configs-messaging-jms-connection
+
+################################################################
+## final restart
+################################################################
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)integrationserver
+    cce_provisioning_postinstall_webmethods: false
+    cce_provisioning_postinstall_service_setup: false
+    cce_provisioning_postinstall_reboot: true
+    cce_provisioning_validation_ports:
+      - 5555
+  tags:
+    - install
+    - install-final

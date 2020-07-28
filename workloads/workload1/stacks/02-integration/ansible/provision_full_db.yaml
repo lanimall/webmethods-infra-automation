@@ -1,0 +1,11 @@
+---
+
+################################################################
+## DB provisioning
+################################################################
+
+- import_playbook: $(stackid)_iscore-db.yaml
+
+- import_playbook: $(stackid)_tnserver-db.yaml
+
+- import_playbook: $(stackid)_mws-db.yaml

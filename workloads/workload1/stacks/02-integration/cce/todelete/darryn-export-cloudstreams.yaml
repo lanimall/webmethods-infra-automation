@@ -1,0 +1,488 @@
+alias: darryn-export-cloudstreams
+dslVersion: '1.0'
+environments:
+  default:
+    fixes:
+    - wMFix.TPP.ApacheCommons_10.5.0.0001-0001
+    - wMFix.WSSCore_10.5.0.0002-0403
+    - wMFix.SJP.Java64.LNXAMD64_10.5.0.0124-0007
+    - wMFix.OSGI.Migration_10.5.0.0003-0286
+    - wMFix.ACDLDeployerSharedBundle_10.5.0.0001-0200
+    - wMFix.NUMClient.CommonLibraries_10.5.0.0006-130752
+    - wMFix.WISSharedInstallerLibs_10.5.0.0001-0162
+    - wMFix.SCGCommon.acdl_10.5.0.0001-0200
+    - wMFix.integrationServer.ART_10.5.0.0002-0010
+    - wMFix.OSGI.Platform_10.5.0.0004-0493
+    - wMFix.integrationServer.Core_10.5.0.0003-0003
+    - wMFix.WISSharedResources_10.5.0.0001-0228
+    - wMFix.CloudStreams.Server_10.5.0.0013-0001
+    - wMFix.TPS.ApacheCommons_10.5.0.0001-0001
+    - wMFix.TPS.Glassfish_10.5.0.0001-0001
+    - wMFix.TPP.Log4j_10.5.0.0001-0001
+    - wMFix.TPP.Misc_10.5.0.0002-0001
+    - wMFix.TPS.Misc_10.5.0.0001-0001
+    - wMFix.MeteringAgent_10.5.0.0002-0251
+    - wMFix.tppParsers_10.5.0.0001-0001
+    - wMFix.ALL.SIN_10.5.0.0002-0249
+    osgi-ctp.common-local-users-administrator.password: ''
+    osgi-ctp.common-ports-defaulthttp.port.enabled: 'true'
+    osgi-ctp.common-ports-defaulthttp.port.number: 8083
+    osgi-ctp.common-ports-defaulthttps.port.enabled: 'true'
+    osgi-ctp.common-ports-defaulthttps.port.number: 8084
+    osgi-ctp.common-ports-defaulthttps.port.ssl.keystoredefinition.location: /opt/softwareag/profiles/CTP/configuration/tomcat/conf/localhost_dont_use_in_production.jks
+    osgi-ctp.common-ports-defaulthttps.port.ssl.keystoredefinition.password: '{AES/CBC/PKCS5Padding}{RJt+yIg2pdJNi/q4Sgh+DiRpjX9ludQsL8VZdLuzzH8=}{2tZfk7kBJJuliMEx0VOdBA==}NVdhTTHkO1ZPkuFSVsFnckMdTd4/RWyw/ihMxt3/gOM='
+    osgi-ctp.common-ports-defaultjmx.port.enabled: 'true'
+    osgi-ctp.common-ports-defaultjmx.port.number: 8044
+    osgi-ctp.common-ports-diagnostics.port.enabled: 'false'
+    osgi-ctp.common-ports-diagnostics.port.number: 10033
+    osgi-ctp.common-ports-ssh.port.enabled: 'false'
+    osgi-ctp.common-ports-ssh.port.number: 8022
+    repo.fix: ${}
+    repo.product: ${}
+uimetadata:
+  prefix:
+  properties:
+    osgi-ctp.common-ports-ssh.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaultjmx.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-diagnostics.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttps.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-ctp.common-ports-diagnostics.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttp.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttps.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaultjmx.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-ctp.common-ports-ssh.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-diagnostics.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    osgi-ctp.common-ports-ssh.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    osgi-ctp.common-ports-defaulthttp.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttp.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaultjmx.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    osgi-ctp.common-ports-defaultjmx.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttp.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttps.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    osgi-ctp.common-ports-diagnostics.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-ctp.common-ports-ssh.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttp.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    osgi-ctp.common-ports-defaulthttps.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-diagnostics.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaultjmx.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-local-users-administrator.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    osgi-ctp.common-ports-ssh.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-ctp.common-ports-defaulthttps.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+layers:
+  darryn-export-cloudstreams-layer:
+    templates: darryn-export-cloudstreams-template
+    productRepo: ${repo.product}
+    fixRepo: ${repo.fix}
+provision:
+  default:
+    darryn-export-cloudstreams-layer: ${nodes}
+templates:
+  darryn-export-cloudstreams-template:
+    products:
+      STP:
+        OSGI-CTP:
+          configuration:
+            OSGI-CTP:
+              COMMON-PORTS:
+                COMMON-PORTS-defaultHttps:
+                  Port:
+                    '@alias': defaultHttps
+                    Enabled: ${osgi-ctp.common-ports-defaulthttps.port.enabled}
+                    Type: STANDARD
+                    Number: ${osgi-ctp.common-ports-defaulthttps.port.number}
+                    Protocol: https
+                    ThreadPool:
+                      '@enabled': 'false'
+                      Max: '150'
+                    SSL:
+                      ClientAuth: NONE
+                      KeystoreDefinition:
+                        Type: JKS
+                        Location: ${osgi-ctp.common-ports-defaulthttps.port.ssl.keystoredefinition.location}
+                        Password: '${osgi-ctp.common-ports-defaulthttps.port.ssl.keystoredefinition.password}'
+                    ExtendedProperties:
+                      Property:
+                      - '@name': sslProtocol
+                        $: TLS
+                      - '@name': sslEnabledProtocols
+                        $: +TLSv1,+TLSv1.1,+TLSv1.2
+                      - '@name': enableLookups
+                        $: 'false'
+                      - '@name': server
+                        $: SoftwareAG-Runtime
+                      - '@name': disableUploadTimeout
+                        $: 'true'
+                      - '@name': algorithm
+                        $: SunX509
+                      - '@name': ciphers
+                        $: TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384, TLS_DHE_DSS_WITH_AES_256_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA, TLS_ECDH_RSA_WITH_AES_256_CBC_SHA, TLS_DHE_DSS_WITH_AES_256_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256, TLS_DHE_DSS_WITH_AES_128_CBC_SHA256, TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA, TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA, TLS_ECDH_RSA_WITH_AES_128_CBC_SHA, TLS_DHE_DSS_WITH_AES_128_CBC_SHA, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384, TLS_DHE_DSS_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256, TLS_RSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256, TLS_DHE_DSS_WITH_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_ECDSA_WITH_3DES_EDE_CBC_SHA, TLS_ECDH_RSA_WITH_3DES_EDE_CBC_SHA, TLS_EMPTY_RENEGOTIATION_INFO_SCSVF
+                      - '@name': minSpareThreads
+                        $: '25'
+                      - '@name': acceptCount
+                        $: '100'
+                      - '@name': maxHttpHeaderSize
+                        $: '8192'
+                COMMON-PORTS-defaultJmx:
+                  Port:
+                    '@alias': defaultJmx
+                    Enabled: ${osgi-ctp.common-ports-defaultjmx.port.enabled}
+                    Type: STANDARD
+                    Number: ${osgi-ctp.common-ports-defaultjmx.port.number}
+                    Protocol: JMX
+                    ExtendedProperties:
+                      Property:
+                      - '@name': jaasRealm
+                        $: PlatformManagement
+                COMMON-PORTS-ssh:
+                  Port:
+                    '@alias': ssh
+                    Enabled: ${osgi-ctp.common-ports-ssh.port.enabled}
+                    Type: STANDARD
+                    Number: ${osgi-ctp.common-ports-ssh.port.number}
+                    Protocol: SSH
+                    ExtendedProperties:
+                      Property:
+                      - '@name': jaasRealm
+                        $: PlatformManagement
+                      - '@name': keyFile
+                        $: '@path:osgi.configuration.area/sshd.key'
+                COMMON-PORTS-defaultHttp:
+                  Port:
+                    '@alias': defaultHttp
+                    Enabled: ${osgi-ctp.common-ports-defaulthttp.port.enabled}
+                    Type: STANDARD
+                    Number: ${osgi-ctp.common-ports-defaulthttp.port.number}
+                    Protocol: http
+                    ThreadPool:
+                      '@enabled': 'false'
+                      Max: '150'
+                    ExtendedProperties:
+                      Property:
+                      - '@name': disableUploadTimeout
+                        $: 'true'
+                      - '@name': minSpareThreads
+                        $: '25'
+                      - '@name': redirectPort
+                        $: '8084'
+                      - '@name': server
+                        $: SoftwareAG-Runtime
+                      - '@name': enableLookups
+                        $: 'false'
+                      - '@name': acceptCount
+                        $: '100'
+                      - '@name': connectionTimeout
+                        $: '20000'
+                      - '@name': maxHttpHeaderSize
+                        $: '8192'
+                COMMON-PORTS-diagnostics:
+                  Port:
+                    '@alias': diagnostics
+                    Enabled: ${osgi-ctp.common-ports-diagnostics.port.enabled}
+                    Type: DIAGNOSTIC
+                    Number: ${osgi-ctp.common-ports-diagnostics.port.number}
+                    Protocol: JDWP
+                    ExtendedProperties:
+                      Property:
+                      - '@name': suspend
+                        $: n
+              COMMON-LOG4J2:
+                log4j2.properties:
+                  logger.7.name: org.springframework.beans
+                  appender.console.layout.type: PatternLayout
+                  logger.9.name: com.softwareag.platform
+                  monitorInterval: '60'
+                  appender.rolling.type: RollingFile
+                  logger.2.level: warn
+                  logger.7.level: warn
+                  appender.rolling.policies.size.type: SizeBasedTriggeringPolicy
+                  logger.4.level: warn
+                  logger.1.level: info
+                  appender.console.name: Platform.Console
+                  logger.9.level: info
+                  logger.6.level: warn
+                  logger.3.level: warn
+                  logger.8.level: warn
+                  logger.5.level: warn
+                  name: SAGPropertiesConfig
+                  appender.rolling.fileName: /opt/softwareag/profiles/CTP/logs/sag-osgi.log
+                  appender.rolling.policies.size.size: 10MB
+                  appender.console.filter.threshold.level: fatal
+                  logger.2.name: Events.Bundle
+                  appender.rolling.name: Platform.RollingLogFile
+                  rootLogger.appenderRef.rolling.ref: Platform.RollingLogFile
+                  logger.4.name: Events.Service
+                  rootLogger.level: info
+                  logger.6.name: org.apache.camel
+                  logger.8.name: org.eclipse.gemini.blueprint
+                  appender.rolling.layout.type: PatternLayout
+                  appender.console.target: SYSTEM_OUT
+                  status: error
+                  appender.rolling.strategy.type: DefaultRolloverStrategy
+                  appender.console.layout.pattern: '%date{DEFAULT} %-5level [%-60.60logger{3.1.}]%notEmpty{[%mdc{osgi.bundleId}]}%notEmpty{[%mdc{osgi.service}]} - %message%n'
+                  appender.rolling.layout.pattern: '%date{DEFAULT} %-5level [%-60.60logger{3.1.}]%notEmpty{[%mdc{osgi.bundleId}]}%notEmpty{[%mdc{osgi.service}]} - %message%n'
+                  appender.rolling.filePattern: /opt/softwareag/profiles/CTP/logs/sag-osgi-%i.log.gz
+                  rootLogger.appenderRef.console.ref: Platform.Console
+                  appender.console.type: Console
+                  appender.rolling.policies.type: Policies
+                  logger.1.name: com.softwareag
+                  appender.rolling.strategy.max: '10'
+                  appender.console.filter.threshold.type: ThresholdFilter
+                  logger.3.name: Events.Framework
+                  logger.5.name: org.apache.shiro
+              COMMON-MEMORY:
+                COMMON-MEMORY:
+                  InitSize: '256'
+                  MaxSize: '512'
+              SAG-INSTALL-DIR:
+                SAG-INSTALL-DIR: |
+                  /opt/softwareag
+              COMMON-LOCAL-USERS:
+                COMMON-LOCAL-USERS-Administrator:
+                  '@id': Administrator
+                  Password: '${osgi-ctp.common-local-users-administrator.password}'
+              COMMON-SYSPROPS:
+                COMMON-SYSPROPS:
+                  osgi.install.area: '"%OSGI_INSTALL_AREA%"'
+                  log4j.configurationFile.stripquotes: 'TRUE'
+                  osgi.install.area.stripquotes: 'TRUE'
+                  log4j.configurationFile: '"/opt/softwareag/profiles/CTP/configuration/logging/log4j2.properties"'
+                  java.io.tmpdir.stripquotes: 'TRUE'
+                  osgi.noShutdown: 'true'
+                  Log4jContextSelector: org.apache.logging.log4j.core.selector.BasicContextSelector
+                  java.util.logging.manager: com.softwareag.platform.jul.proxy.ProxyLogManager
+                  eclipse.ignoreApp: 'true'
+                  java.io.tmpdir: '"%OSGI_INSTALL_AREA%/workspace/temp"'
+                  log4j2.disable.jmx: 'true'
+              COMMON-JVM-OPTIONS:
+                COMMON-JVM-OPTIONS:
+                  option:
+                  - -Xbootclasspath/a:"%JAVA_BOOT_CLASSPATH%":/opt/softwareag/common/runtime/bundles/platform/eclipse/plugins/com.softwareag.platform.logging.jul.proxy_10.5.0.0000-0444.jar
+                  - -Xbootclasspath/a:"%JAVA_BOOT_CLASSPATH%":/opt/softwareag/common/runtime/bundles/platform/eclipse/plugins/com.softwareag.platform.logging.jul.proxy_10.5.0.0000-0444.jar.stripquotes=TRUE
+              COMMON-JSW:
+                COMMON-JSW:
+                  wrapper.app.parameter.4.stripquotes: 'TRUE'
+                  wrapper.app.parameter.4: '"%OSGI_CONFIGURATION_AREA%"'
+                  wrapper.syslog.loglevel: NONE
+                  wrapper.app.parameter.3: -configuration
+                  wrapper.app.parameter.2: '2'
+                  wrapper.app.parameter.1: org.eclipse.equinox.launcher.Main
+                  wrapper.logfile: '%OSGI_INSTALL_AREA%/logs/wrapper.log'
+                  wrapper.java.classpath.2: '%JAVA_SYSTEM_CLASSPATH%'
+                  wrapper.jvm_exit.timeout: '90'
+                  wrapper.java.classpath.1: /opt/softwareag/common/lib/tw-3.5.37%WRAPPER_FILE_SEPARATOR%wrapper.jar
+                  wrapper.logfile.loglevel: INFO
+                  wrapper.app.parameter.33: shutdown
+                  wrapper.app.parameter.32: '1'
+                  wrapper.anchorfile: ''
+                  wrapper.app.parameter.31: 'FALSE'
+                  wrapper.app.parameter.30: com.softwareag.platform.bootstrap.Bootstrap
+                  wrapper.java.command: /opt/softwareag/jvm/jvm/bin/java
+                  wrapper.ntservice.displayname: Software AG Runtime 10.5
+                  wrapper.logfile.maxfiles: '5'
+                  wrapper.ignore_sequence_gaps: 'TRUE'
+                  wrapper.ntservice.name: sagctp105
+                  wrapper.java.pidfile: '%OSGI_INSTALL_AREA%/bin/.lock'
+                  wrapper.java.library.path.3: /opt/softwareag/common%WRAPPER_FILE_SEPARATOR%security/ssx/lib
+                  wrapper.java.library.path.2: /opt/softwareag/common%WRAPPER_FILE_SEPARATOR%lib
+                  wrapper.java.library.path.1: /opt/softwareag/common/lib/tw-3.5.37
+                  wrapper.logfile.format: LPTM
+                  wrapper.shutdown.timeout: '90'
+                  wrapper.ntservice.interactive: 'FALSE'
+                  wrapper.lang.folder: ../lang
+                  wrapper.ntservice.starttype: AUTO_START
+                  wrapper.console.format: PM
+                  wrapper.java.mainclass: org.tanukisoftware.wrapper.WrapperStartStopApp
+                  wrapper.ntservice.description: Software AG Runtime 10.5
+                  wrapper.ntservice.dependency.1: ''
+                  wrapper.pidfile.strict: 'TRUE'
+                  wrapper.console.title: Software AG Runtime 10.5
+                  wrapper.logfile.maxsize: 10m
+                  wrapper.on_exit.23: RESTART
+                  wrapper.console.loglevel: INFO
+              SIN-INTERNAL-ROLES:
+                SIN-INTERNAL-ROLES-common-roles.txt: |
+                  [permissions]
+                  permission:allow=canwrite,canexecute,canread
+
+                  [roles]
+                  role:superadmin=*
+                  role:readonlyadmin=canread,canexecute
+                  role:viewer=canread
+
+                  [users]
+                  user:"Administrator"=superadmin
+
+                  [groups]
+                  group:"Administrators"=superadmin
+              COMMON-JAVASYSPROPS:
+                COMMON-JAVASYSPROPS:
+                  osgi.install.area: '"%OSGI_INSTALL_AREA%"'
+                  log4j.configurationFile.stripquotes: 'TRUE'
+                  osgi.install.area.stripquotes: 'TRUE'
+                  log4j.configurationFile: '"/opt/softwareag/profiles/CTP/configuration/logging/log4j2.properties"'
+                  java.io.tmpdir.stripquotes: 'TRUE'
+                  osgi.noShutdown: 'true'
+                  Log4jContextSelector: org.apache.logging.log4j.core.selector.BasicContextSelector
+                  java.util.logging.manager: com.softwareag.platform.jul.proxy.ProxyLogManager
+                  eclipse.ignoreApp: 'true'
+                  java.io.tmpdir: '"%OSGI_INSTALL_AREA%/workspace/temp"'
+                  log4j2.disable.jmx: 'true'
+              COMMON-JAAS:
+                COMMON-JAAS-jaas.config: |
+                  /*
+                   * Copyright (c) 2001 - 2019 Software AG, Darmstadt, Germany
+                   * and/or Software AG USA, Inc., Reston, VA, United States of America,
+                   * and/or their licensors.
+                   */
+
+                  /*
+                   * NOTE: When deploying JAAS configuration on the IBM WebSphere
+                   * Application server fails, remove all comments from the
+                   * configuration file.
+                   */
+
+
+                  /*
+                   * Login context, used in the Platform for default authentication
+                   */
+                  Default {
+                      // SSOS login module for SAML signed assertion validation
+                      com.softwareag.security.idp.saml.lm.SAMLAssertValidatorLoginModule sufficient;
+
+                      // Internal repository login module (java based)
+                      com.softwareag.security.jaas.login.internal.InternalLoginModule required
+                          template_section=INTERNAL
+                          logCallback=true
+                          internalRepository="@path:sag.install.area/common/conf/users.txt"
+                          create_group_principal=true
+                          groupRepositoryPath="@path:sag.install.area/common/conf/groups.txt";
+
+                      // Role repository login module
+                      com.softwareag.security.authz.store.jaas.login.RoleLoginModule optional
+                          storage_location="@path:sag.install.area/common/conf/roles.txt";
+
+                      // SSOS login module for SAML sign assertion generation
+                      //com.softwareag.security.idp.saml.lm.SAMLAssertIssuerLoginModule optional;
+                  };
+
+                  /*
+                   * Login context, used in common Platform for management channel .
+                   */
+                  PlatformManagement {
+                      // SSOS login module for SAML signed assertion validation
+                      // used for delegated out only for JMX
+                      com.softwareag.security.idp.saml.lm.JMXDelegatedAuthLoginModule sufficient;
+
+                      // Internal repository login module (java based)
+                      com.softwareag.security.jaas.login.internal.InternalLoginModule required
+                          template_section=INTERNAL
+                          logCallback=true
+                          internalRepository="@path:sag.install.area/common/conf/users.txt";
+
+                      // Role repository login module
+                      com.softwareag.security.authz.store.jaas.login.RoleLoginModule optional
+                          storage_location="@path:sag.install.area/common/conf/roles.txt";
+                  };
+
+                  /*
+                   * Login context, used in System Management Hub, CentraSite, etc.
+                   */
+                  PluggableUI {
+                      // Internal repository login module (java based)
+                      com.softwareag.security.jaas.login.internal.InternalLoginModule required
+                          template_section=INTERNAL
+                          logCallback=true
+                          internalRepository="@path:sag.install.area/common/conf/users.txt";
+                  };
+              SIN-INTERNAL-GROUPS:
+                SIN-INTERNAL-GROUPS-common-groups.txt: |
+                  *
+                  *
+                  * SAG Internal Groups Repository
+                  *
+                  * Copyright (c) 2001 - 2019 Software AG, Darmstadt, Germany and/or Software AG USA Inc.,
+                  * Reston, VA, USA, and/or its subsidiaries and/or its affiliates and/or their licensors.
+                  * version:2.0
+                  *
+
+                  Administrators:1:Administrator
+      wst:
+    fixes: ${fixes}

@@ -1,0 +1,94 @@
+---
+
+################################################################
+## load the needed vars
+################################################################
+ 
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_dbserver_secrets.yaml"
+    - name: Include vars
+      include_vars:
+        file: "{{ ansible_env.HOME }}/.ansible_vars/$(stackid)_iscore_secrets.yaml"
+  tags:
+    - always
+
+################################################################
+## Create Product DB schema + user + permissions
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: commandcentral
+    cce_provisioning_template: databases/sqlserver/template-storage-dsl1.1.yaml
+    cce_provisioning_properties: database-storage
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_dbcserver }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_dbcserver }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_dbcserver }}"
+      - name: "db.host"
+        value: "{{ dbserver_host }}"       
+      - name: "db.port"
+        value: "{{ dbserver_port }}"
+      - name: "db.admin.username"
+        value: "{{ dbserver_root_username }}"
+      - name: "db.name"
+        value: "{{ is_db_name }}"
+      - name: "db.version"
+        value: "{{ is_db_version }}"
+      - name: "db.username"
+        value: "{{ is_db_username }}"
+    cce_provisioning_template_params_secure:
+      - name: "db.admin.password"
+        value: "{{ dbserver_root_password }}"
+      - name: "db.password"
+        value: "{{ is_db_password }}"
+  tags:
+    - install
+    - install-db-storage
+
+################################################################
+## Create Integration server Tables / Metadatas
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: commandcentral
+    cce_provisioning_template: databases/sqlserver/template-is-dsl1.1.yaml
+    cce_provisioning_properties: database
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_dbcserver }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_dbcserver }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_dbcserver }}"
+      - name: "db.host"
+        value: "{{ dbserver_host }}"       
+      - name: "db.port"
+        value: "{{ dbserver_port }}"
+      - name: "db.admin.username"
+        value: "{{ dbserver_root_username }}"
+      - name: "db.name"
+        value: "{{ is_db_name }}"
+      - name: "db.version"
+        value: "{{ is_db_version }}"
+      - name: "db.username"
+        value: "{{ is_db_username }}"
+    cce_provisioning_template_params_secure:
+      - name: "db.admin.password"
+        value: "{{ dbserver_root_password }}"
+      - name: "db.password"
+        value: "{{ is_db_password }}"
+  tags:
+    - install
+    - install-db-metadata

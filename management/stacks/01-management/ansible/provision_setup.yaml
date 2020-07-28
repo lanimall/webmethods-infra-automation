@@ -1,0 +1,5 @@
+---
+
+- import_playbook: sagenv-tools-sysprep-set-custom-configs.yaml
+  vars:
+    custom_config_path: "./vars/$(stackid)_common.yaml"

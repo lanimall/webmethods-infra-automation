@@ -1,0 +1,138 @@
+## cce_provisioning LOCAL paths on management server
+cce_provisioning_code_localpath: ~/saggov_shared_management_azure/webmethods-cce/
+cce_provisioning_content_localpath: /opt/sag_content/
+
+## needed to use the service role
+product_version_major: 10
+product_version_minor: 5
+product_version_full: "{{ product_version_major }}{{ product_version_minor }}"
+
+cce_provisioning_inventory_hosts_property: fqdn
+cce_provisioning_inventory_aliases_property: ""
+cce_provisioning_inventory_aliasmapping_delimiter: "_"
+cce_provisioning_inventory_aliasmapping_prefix: "{{ cce_provisioning_inventory_hosts_pattern }}"
+
+###########################################################
+################ Products / Fixes Repositories to use
+###########################################################
+
+cce_provisioning_products_repo_sdc: "webMethods-{{ product_version_major }}.{{ product_version_minor }}"
+cce_provisioning_fixes_repo_sdc: "Empower"
+
+cce_provisioning_products_repo_dbcserver: "softwareag_105_DBScripts"
+cce_provisioning_fixes_repo_dbcserver: "{{ cce_provisioning_fixes_repo_sdc }}"
+
+cce_provisioning_products_repo_is: "softwareag_105_IntegrationServer_TN_AllAdapters"
+cce_provisioning_fixes_repo_is: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_is: "{{ cce_provisioning_products_repo_is }}_fixes"
+
+cce_provisioning_products_repo_cloudstreams: "softwareag_105_Cloudstreams_IntegrationServer"
+cce_provisioning_fixes_repo_cloudstreams: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_cloudstreams: "{{ cce_provisioning_products_repo_cloudstreams }}_fixes"
+
+cce_provisioning_products_repo_terracotta: "softwareag_bigmemorymax43_linux_x64"
+cce_provisioning_fixes_repo_terracotta: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_terracotta: "{{ cce_provisioning_products_repo_terracotta }}_fixes"
+
+cce_provisioning_products_repo_universalmessaging: "softwareag_105_universalmessaging_linux_x64"
+cce_provisioning_fixes_repo_universalmessaging: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_universalmessaging: "{{ cce_provisioning_products_repo_universalmessaging }}_fixes"
+
+cce_provisioning_products_repo_tnserver: "softwareag_105_IntegrationServer_TN_AllAdapters"
+cce_provisioning_fixes_repo_tnserver: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_tnserver: "{{ cce_provisioning_products_repo_tnserver }}_fixes"
+
+cce_provisioning_products_repo_mws: "softwareag_105_MWS"
+cce_provisioning_fixes_repo_mws: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_mws: "{{ cce_provisioning_products_repo_mws }}_fixes"
+
+##################################################
+################ Fixes to apply
+##################################################
+
+cce_provisioning_fixes_apply_mws: "ALL"
+cce_provisioning_fixes_apply_integserver_isruntime: "ALL"
+cce_provisioning_fixes_apply_integserver_cloudstreams: "ALL"
+cce_provisioning_fixes_apply_integserver_adapters: "ALL"
+
+cce_provisioning_fixes_apply_tnserver_isruntime: "ALL"
+cce_provisioning_fixes_apply_tnserver_tn: "ALL"
+cce_provisioning_fixes_apply_tnserver_adapters: "ALL"
+cce_provisioning_fixes_apply_dbcserver: "ALL"
+cce_provisioning_fixes_apply_umserver: "ALL"
+
+##################################################
+################ DB details
+##################################################
+
+## All passwords will be provided at runtime or in the secrets files created by the "-setsecrets" playbooks
+dbserver_host: "sqlsrvwin1.federaldatabackbone.saggov.local"
+dbserver_port: "1433"
+dbserver_root_username: "adminuser"
+## variable dbserver_root_password provided at runtime
+
+## is core servers
+is_db_name: "fedbb_isdb"
+is_db_version: "latest"
+is_db_username: "fedbb_isdbuser"
+## variable is_db_password provided at runtime
+
+## mws
+mws_db_name: "fedbb_mwsdb"
+mws_db_version: "latest"
+mws_db_username: "fedbb_mwsdbuser"
+## variable mws_db_password provided at runtime
+
+## is tn server
+tnserver_db_name: "fedbb_tndb"
+tnserver_db_version: "latest"
+tnserver_db_username: "fedbb_tndbuser"
+## variable tnserver_db_password provided at runtime
+
+##################################################
+################ Messaging Details
+##################################################
+
+## um artifacts
+cce_provisioning_um_jndi_cf_name: "remote_um"
+webmethods_um_instance_name: "umserver"
+
+## webMethosds IS artifacts
+cce_provisioning_isclient_shared_jndi_alias: "internal_messaging"
+cce_provisioning_isclient_shared_jndi_description: "Messaging Backbone"
+cce_provisioning_isclient_shared_jms_connection_alias: "internal_messaging"
+cce_provisioning_isclient_shared_jms_connection_description: "JMS Messaging connection"
+
+##################################################
+################ IS Servers details
+##################################################
+
+webmethods_iscore_instance_name: "default"
+cce_provisioning_isclient_iscore_jms_connection_clientid: "integrationserverscoreclient"
+
+##################################################
+################ TN servers details
+##################################################
+
+## tnserver_administrator_password provided at runtime
+webmethods_tnserver_instance_name: "default"
+cce_provisioning_isclient_tnserver_jms_connection_clientid: "tnserverclient"
+
+##################################################
+################ MWS servers details
+##################################################
+
+## mws_administrator_password provided at runtime
+## mws_sysadmin_password provided at runtime
+
+webmethods_mws_instance_name: "default"
+webmethods_mws_loadbalancer_fqdn: "mgt-mws-$(stackenv).clouddemo.saggov.com"
+webmethods_mws_loadbalancer_http_port: "80"
+webmethods_mws_loadbalancer_https_port: "443"
+webmethods_mws_admin_email: "admin@softwareaggov.com"
+
+webmethods_mws_targets_tn_host: "maininternallb.federaldatabackbone.saggov.local"
+webmethods_mws_targets_tn_port: "25555"
+webmethods_mws_targets_tn_secured: "false"
+
+webmethods_mws_targets_um_url: "nsp://maininternallb.federaldatabackbone.saggov.local:19000"

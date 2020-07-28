@@ -1,0 +1,52 @@
+---
+
+################################################################
+## Load stack variables
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## terracotta provisioning
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_template: terracotta/template-webmethods-clustering-dsl1.1.yaml
+    cce_provisioning_properties: terracotta
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_terracotta }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_terracotta }}"
+      - name: "tc.key.license.alias"
+        value: "*TerraCotta_v4_Clustering_IS_terracotta-license.key"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_terracotta }}"
+      - name: "tc.memory.init"
+        value: "2048"
+      - name: "tc.memory.max"
+        value: "2048"
+  tags:
+    - install
+    - install-runtime
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)apigateway
+    cce_provisioning_installed_product_names: terracotta
+    cce_provisioning_validation_ports:
+      - 9530
+      - 9540
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall

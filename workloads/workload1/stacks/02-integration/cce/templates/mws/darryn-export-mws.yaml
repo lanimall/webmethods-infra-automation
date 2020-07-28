@@ -1,0 +1,926 @@
+alias: darryn-export-mws
+dslVersion: '1.0'
+environments:
+  default:
+    fixes:
+    - wMFix.SJP.Java64.LNXAMD64_10.5.0.0124-0007
+    - wMFix.OSGI.Migration_10.5.0.0003-0286
+    - wMFix.NUMRepository.SharedBundles_10.5.0.0006-130752
+    - wMFix.MwsProgramFiles_10.5.0.0004-0065
+    - wMFix.SPM_10.5.0.0005-0223
+    - wMFix.ACDLDeployerSharedBundle_10.5.0.0001-0200
+    - wMFix.WISSharedInstallerLibs_10.5.0.0001-0162
+    - wMFix.OSGI.Platform_10.5.0.0004-0493
+    - wMFix.SUMApi_10.5.0.0003-0197
+    - wMFix.WISSharedResources_10.5.0.0001-0228
+    - wMFix.WSSOSGi_10.5.0.0002-0403
+    - wMFix.SDRepository_10.5.0.0003-0167
+    - wMFix.TPS.ApacheCommons_10.5.0.0001-0001
+    - wMFix.TPS.Glassfish_10.5.0.0001-0001
+    - wMFix.TPP.Log4j_10.5.0.0001-0001
+    - wMFix.TPS.Misc_10.5.0.0001-0001
+    - wMFix.CCShared_10.5.0.0005-0097
+    - wMFix.MeteringAgent_10.5.0.0002-0251
+    - wMFix.ALL.SIN_10.5.0.0002-0249
+    - wMFix.TNPortal_10.5.0.0002-0011
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.database: ms
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.password: '{AES/CBC/PKCS5Padding}{fU9W0C5aEcvCoi9lLTUNtxOp0HH+zUnrb54u2gMpM5E=}{qAynfCP85+QurUVEe3X1Mg==}oiJKdrh59h2gzzQjZiVWtw=='
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.url: jdbc:wm:sqlserver://covid19.database.usgovcloudapi.net:1433;databaseName=coviddb;ValidateServerCertificate=0;SpyAttributes=(log=(file)/tmp/spy.log)
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.user: cvadmin
+    mwsprogramfiles-default.common-keystores.keystore.location: /opt/softwareag/MWS/server/default/config/security/localhost.p12
+    mwsprogramfiles-default.common-keystores.keystore.password: '{AES/CBC/PKCS5Padding}{TuGX6MJ2IiZVAGZglqKxy5i11Gvh1aUheka/yduWC7Q=}{v5iezJJPS9Jdt8Qhj1w8rg==}eJhBWWzo3htIEA2YK7fyKw=='
+    mwsprogramfiles-default.common-keystores.keystore.type: PKCS12
+    mwsprogramfiles-default.common-local-users-administrator.password: ''
+    mwsprogramfiles-default.common-local-users-deleteditems.password: ''
+    mwsprogramfiles-default.common-local-users-designer.password: ''
+    mwsprogramfiles-default.common-local-users-guest.password: ''
+    mwsprogramfiles-default.common-local-users-sysadmin.password: ''
+    mwsprogramfiles-default.common-local-users-webm-clusteruser.password: ''
+    mwsprogramfiles-default.common-local-users-webm-sysuser.password: ''
+    mwsprogramfiles-default.common-ports-http.port.bindaddress: is.internal.usgovcloudapp.net
+    mwsprogramfiles-default.common-ports-http.port.enabled: 'true'
+    mwsprogramfiles-default.common-ports-http.port.number: 8585
+    mwsprogramfiles-default.common-ports-https.port.bindaddress: is.internal.usgovcloudapp.net
+    mwsprogramfiles-default.common-ports-https.port.enabled: 'false'
+    mwsprogramfiles-default.common-ports-https.port.number: 0
+    mwsprogramfiles-default.common-smtp.host: localhost
+    mwsprogramfiles-default.common-smtp.password: ''
+    mwsprogramfiles-default.common-smtp.portnumber: 25
+    mwsprogramfiles-default.common-truststores.truststore.location: /opt/softwareag/MWS/server/default/config/security/sagdemoca.jks
+    mwsprogramfiles-default.common-truststores.truststore.password: '{AES/CBC/PKCS5Padding}{o1iOlLTPGBiNBnaJVP2rdL/My9tqMTR+4QRPR71c1TY=}{QITGLqSX4jyLZrKTkB0O/g==}Mam6NQYLbF0+/pvlPy5o+Q=='
+    mwsprogramfiles-default.common-truststores.truststore.type: JKS
+    mwsprogramfiles-default.common-vars-csp-default-host.variable.$: localhost
+    mwsprogramfiles-default.common-vars-csp-default-name.variable.$: csp_master
+    mwsprogramfiles-default.common-vars-csp-default-password.variable.$: '{AES/CBC/PKCS5Padding}{B79utlmwlPVv9u0n6jFs6t697NOxpjTM4OKk3Xtdegk=}{aN9/7MSX7HYt+JC9pMGjqA==}rgQlWwmssD2PpSASxxk4iA=='
+    mwsprogramfiles-default.common-vars-csp-default-port.variable.$: 9010
+    mwsprogramfiles-default.common-vars-csp-default-streaming-port.variable.$: 9011
+    mwsprogramfiles-default.common-vars-csp-default-username.variable.$: csp
+    mwsprogramfiles-default.common-vars-csp-default-webreader-url.variable.$: http://localhost:8080/SAGWebReader/
+    mwsprogramfiles-default.common-vars-jcr-systempassword.variable.$: '{AES/CBC/PKCS5Padding}{l3SU5kaZypBNMM2Xc1BeAsWAMO4cUt+HM7YJdRJowZc=}{/+VwNPxsUJXD/p7dT9YoDQ==}8HmdtjKgdgInztV0Zm7giA=='
+    mwsprogramfiles-default.common-vars-jcr-systemuserid.variable.$: ''
+    mwsprogramfiles-default.common-vars-jcr-workspacename.variable.$: ''
+    mwsprogramfiles-default.common-vars-wsclient-endpointaddress.variable.$: ''
+    mwsprogramfiles-default.common-vars-wsclient-password.variable.$: '{AES/CBC/PKCS5Padding}{99wkoI6HwvxTf/ZncnLiLEEYXtLjQvZdQ+wwV9JedQA=}{YbWSm7RCrcpJKXColCKw9w==}jKTuJ5ctkLJPGE1zLOyBog=='
+    mwsprogramfiles-default.common-vars-wsclient-requiresauth.variable.$: ''
+    mwsprogramfiles-default.common-vars-wsclient-sockettimeout.variable.$: ''
+    mwsprogramfiles-default.common-vars-wsclient-username.variable.$: ''
+    mwsprogramfiles.default.db.password: '{AES/CBC/PKCS5Padding}{ypC9NcbqHXhpoB+V1NRguhCwqacFi4zM15NFCOR872o=}{I+wNKt4pY9hlCTmmMdG94w==}wiccEoCmAhPClkX/Pnw+ca96rGV7IGguyuLMUhy8plQ='
+    mwsprogramfiles.default.db.type: SQLSERVER
+    mwsprogramfiles.default.db.url: jdbc:wm:sqlserver://covid19.database.usgovcloudapi.net:1433;databaseName=coviddb;ValidateServerCertificate=0;SpyAttributes=(log=(file)/tmp/spy.log)
+    mwsprogramfiles.default.db.username: cvadmin
+    mwsprogramfiles.default.debug.port: '10033'
+    mwsprogramfiles.default.http.port: '8585'
+    mwsprogramfiles.default.https.port: '0'
+    mwsprogramfiles.default.jmx.port: '5002'
+    mwsprogramfiles.default.node.name: is.internal.usgovcloudapp.net-node10986
+    mwsprogramfiles.default.server.name: default
+    osgi-mws_default.common-ports-defaultjmx.port.enabled: 'true'
+    osgi-mws_default.common-ports-defaultjmx.port.number: 5002
+    osgi-mws_default.common-ports-diagnostics.port.enabled: 'false'
+    osgi-mws_default.common-ports-diagnostics.port.number: 10033
+    osgi-mws_default.common-ports-ssh.port.enabled: 'false'
+    osgi-mws_default.common-ports-ssh.port.number: 8022
+    osgi-mws_default.common-proxy-all.host: noHost
+    repo.fix: ${}
+    repo.product: ${}
+uimetadata:
+  prefix:
+  properties:
+    mwsprogramfiles-default.common-keystores.keystore.location:
+      displayName: Keystore Location
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.portnumber:
+      displayName: JDBC Port Number
+      data_type: number
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-csp-default-host.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-diagnostics.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    mwsprogramfiles-default.common-smtp.host:
+      displayName: SMTP Host Name
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-smtp.to.email:
+      displayName: Email
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-ports-http.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-jcr-workspacename.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.password:
+      displayName: JDBC Password
+      data_type: string
+      isSecure: 'true'
+    osgi-mws_default.common-ports-ssh.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-mws_default.common-ports-diagnostics.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-ports-http.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    osgi-mws_default.common-ports-diagnostics.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-truststores.truststore.location:
+      displayName: Truststore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-ssh.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-proxy-all.username:
+      displayName: Proxy User Name
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-local-users-designer.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-ports-https.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-local-users-webm-sysuser.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-ports-https.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    mwsprogramfiles-default.common-ports-http.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-smtp.username:
+      displayName: SMTP User Name
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-csp-default-username.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-csp-default-streaming-port.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-wsclient-username.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-defaultjmx.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-mws_default.common-proxy-all.port:
+      displayName: Proxy port
+      data_type: number
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-wsclient-sockettimeout.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-ports-https.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-vars-wsclient-password.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-diagnostics.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-local-users-deleteditems.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-local-users-administrator.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-ports-http.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-smtp.password:
+      displayName: SMTP Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-keystores.keystore.type:
+      displayName: Keystore Type
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-truststores.truststore.type:
+      displayName: Truststore Type
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.host:
+      displayName: JDBC Host Name
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-ssh.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.url:
+      displayName: JDBC URL
+      data_type: url
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-csp-default-port.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.database:
+      displayName: JDBC Database Name
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-defaultjmx.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-vars-csp-default-password.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-wsclient-requiresauth.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-keystores.keystore.password:
+      displayName: Keystore Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-ports-http.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    mwsprogramfiles-default.common-local-users-webm-clusteruser.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-ports-https.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-proxy-all.host:
+      displayName: Proxy host
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-defaultjmx.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-wsclient-endpointaddress.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-keystores.keystore.key.password:
+      displayName: Keystore Key Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-vars-jcr-systemuserid.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-local-users-sysadmin.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-vars-csp-default-webreader-url.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-csp-default-name.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-diagnostics.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.user:
+      displayName: JDBC User Name
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-vars-jcr-systempassword.variable.$:
+      displayName: Variable Value
+      data_type: string
+      isSecure: 'false'
+    mwsprogramfiles-default.common-local-users-guest.password:
+      displayName: Local User Password
+      data_type: string
+      isSecure: 'true'
+    osgi-mws_default.common-proxy-all.password:
+      displayName: Proxy Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-truststores.truststore.password:
+      displayName: Truststore Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-ports-https.port.enabled:
+      displayName: Port Enabled
+      data_type: boolean
+      isSecure: 'false'
+    osgi-mws_default.common-ports-defaultjmx.port.ssl.keystoredefinition.location:
+      displayName: Port SSL Keystore Location
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-defaultjmx.port.bindaddress:
+      displayName: Port Bind Address
+      data_type: string
+      isSecure: 'false'
+    osgi-mws_default.common-ports-ssh.port.number:
+      displayName: Port Number
+      data_type: number
+      isSecure: 'false'
+    osgi-mws_default.common-ports-ssh.port.ssl.keystoredefinition.password:
+      displayName: Port SSL Keystore Password
+      data_type: string
+      isSecure: 'true'
+    mwsprogramfiles-default.common-smtp.portnumber:
+      displayName: SMTP Port Number
+      data_type: number
+      isSecure: 'false'
+layers:
+  darryn-export-mws-layer:
+    templates: darryn-export-mws-template
+    productRepo: ${repo.product}
+    fixRepo: ${repo.fix}
+provision:
+  default:
+    darryn-export-mws-layer: ${nodes}
+templates:
+  darryn-export-mws-template:
+    products:
+      MwsProgramFiles:
+        default:
+          node.name: ${mwsprogramfiles.default.node.name}
+          jmx.port: ${mwsprogramfiles.default.jmx.port}
+          db.url: ${mwsprogramfiles.default.db.url}
+          https.port: ${mwsprogramfiles.default.https.port}
+          server.name: ${mwsprogramfiles.default.server.name}
+          db.username: ${mwsprogramfiles.default.db.username}
+          debug.port: ${mwsprogramfiles.default.debug.port}
+          http.port: ${mwsprogramfiles.default.http.port}
+          db.type: ${mwsprogramfiles.default.db.type}
+          db.password: '${mwsprogramfiles.default.db.password}'
+          configuration:
+            OSGI-MWS_default:
+              COMMON-JVM-OPTIONS:
+                COMMON-JVM-OPTIONS:
+                  option:
+                  - -Xbootclasspath/a:"%JAVA_BOOT_CLASSPATH%":/opt/softwareag/common/runtime/bundles/platform/eclipse/plugins/com.softwareag.platform.logging.jul.proxy_10.5.0.0000-0444.jar
+                  - -Xbootclasspath/a:"%JAVA_BOOT_CLASSPATH%":/opt/softwareag/common/runtime/bundles/platform/eclipse/plugins/com.softwareag.platform.logging.jul.proxy_10.5.0.0000-0444.jar.stripquotes=TRUE
+                  - -server
+              COMMON-JSW:
+                COMMON-JSW:
+                  wrapper.app.parameter.4.stripquotes: 'TRUE'
+                  wrapper.app.parameter.4: '"%OSGI_CONFIGURATION_AREA%"'
+                  wrapper.syslog.loglevel: NONE
+                  wrapper.java.library.path.102: '%WM_HOME%/common/bin'
+                  wrapper.app.parameter.3: -configuration
+                  wrapper.check.deadlock: 'FALSE'
+                  wrapper.java.library.path.101: '%SERVER_HOME%/bin'
+                  wrapper.filter.message.1000: The JVM has run out of memory.
+                  wrapper.app.parameter.2: '2'
+                  wrapper.java.library.path.100: '%JAVA_HOME%/bin'
+                  wrapper.app.parameter.1: org.eclipse.equinox.launcher.Main
+                  wrapper.logfile: '%OSGI_INSTALL_AREA%/logs/wrapper.log'
+                  wrapper.java.additional.auto_bits: 'TRUE'
+                  wrapper.java.classpath.2: '%JAVA_SYSTEM_CLASSPATH%'
+                  wrapper.jvm_exit.timeout: '180'
+                  wrapper.java.classpath.1: /opt/softwareag/common/lib/tw-3.5.37%WRAPPER_FILE_SEPARATOR%wrapper.jar
+                  wrapper.on_exit.6: RESTART
+                  wrapper.logfile.loglevel: INFO
+                  wrapper.app.parameter.33: shutdown
+                  wrapper.app.parameter.32: '1'
+                  wrapper.anchorfile: ''
+                  wrapper.app.parameter.31: 'FALSE'
+                  wrapper.app.parameter.30: com.softwareag.platform.bootstrap.Bootstrap
+                  wrapper.event.jvm_restart.email.body: The JVM was restarted.\n\nPlease check on its status.\n
+                  wrapper.filter.action.1000: RESTART
+                  wrapper.java.command: /opt/softwareag/jvm/jvm/jre/bin/java
+                  wrapper.check.deadlock.output: FULL
+                  wrapper.ntservice.displayname: Software AG My webMethods Server 10.5 (default) (1)
+                  wrapper.logfile.maxfiles: '5'
+                  wrapper.ignore_sequence_gaps: 'TRUE'
+                  wrapper.ping.timeout: '20'
+                  wrapper.ntservice.name: sagmws105_default_1
+                  wrapper.filter.trigger.1000: java.lang.OutOfMemoryError
+                  wrapper.java.library.path.3: /opt/softwareag/common%WRAPPER_FILE_SEPARATOR%security/ssx/lib
+                  wrapper.java.pidfile: '%OSGI_INSTALL_AREA%/bin/.lock'
+                  wrapper.java.library.path.2: /opt/softwareag/common%WRAPPER_FILE_SEPARATOR%lib
+                  wrapper.java.library.path.1: /opt/softwareag/common/lib/tw-3.5.37
+                  wrapper.console.flush: 'TRUE'
+                  wrapper.check.deadlock.interval: '60'
+                  wrapper.logfile.format: LPTM
+                  wrapper.shutdown.timeout: '90'
+                  wrapper.ntservice.interactive: 'FALSE'
+                  wrapper.lang.folder: ../lang
+                  wrapper.ntservice.starttype: AUTO_START
+                  wrapper.console.format: PM
+                  wrapper.java.mainclass: org.tanukisoftware.wrapper.WrapperStartStopApp
+                  wrapper.check.deadlock.action: RESTART
+                  wrapper.ntservice.description: Software AG My webMethods Server null
+                  wrapper.ntservice.dependency.1: ''
+                  wrapper.pidfile.strict: 'TRUE'
+                  wrapper.logfile.maxsize: 10m
+                  wrapper.console.title: Software AG My webMethods Server (%SERVER_NAME%)
+                  wrapper.on_exit.23: RESTART
+                  wrapper.console.loglevel: INFO
+              SAG-INSTALL-DIR:
+                SAG-INSTALL-DIR: |
+                  /opt/softwareag
+              COMMON-PORTS:
+                COMMON-PORTS-defaultJmx:
+                  Port:
+                    '@alias': defaultJmx
+                    Enabled: ${osgi-mws_default.common-ports-defaultjmx.port.enabled}
+                    Type: STANDARD
+                    Number: ${osgi-mws_default.common-ports-defaultjmx.port.number}
+                    Protocol: JMX
+                    ExtendedProperties:
+                      Property:
+                      - '@name': jaasRealm
+                        $: PlatformManagement
+                COMMON-PORTS-ssh:
+                  Port:
+                    '@alias': ssh
+                    Enabled: ${osgi-mws_default.common-ports-ssh.port.enabled}
+                    Type: STANDARD
+                    Number: ${osgi-mws_default.common-ports-ssh.port.number}
+                    Protocol: SSH
+                    ExtendedProperties:
+                      Property:
+                      - '@name': jaasRealm
+                        $: PlatformManagement
+                      - '@name': keyFile
+                        $: '@path:osgi.configuration.area/sshd.key'
+                COMMON-PORTS-diagnostics:
+                  Port:
+                    '@alias': diagnostics
+                    Enabled: ${osgi-mws_default.common-ports-diagnostics.port.enabled}
+                    Type: DIAGNOSTIC
+                    Number: ${osgi-mws_default.common-ports-diagnostics.port.number}
+                    Protocol: JDWP
+                    ExtendedProperties:
+                      Property:
+                      - '@name': suspend
+                        $: n
+              COMMON-LOG4J2:
+                log4j2.properties:
+                  logger.7.name: org.springframework.beans
+                  appender.console.layout.type: PatternLayout
+                  logger.9.name: com.softwareag.platform
+                  monitorInterval: '60'
+                  appender.rolling.type: RollingFile
+                  logger.2.level: warn
+                  logger.7.level: warn
+                  appender.rolling.policies.size.type: SizeBasedTriggeringPolicy
+                  logger.4.level: warn
+                  logger.1.level: info
+                  appender.console.name: Platform.Console
+                  logger.9.level: info
+                  logger.6.level: warn
+                  logger.3.level: warn
+                  logger.8.level: warn
+                  logger.5.level: warn
+                  name: SAGPropertiesConfig
+                  appender.rolling.fileName: /opt/softwareag/profiles/MWS_default/logs/sag-osgi.log
+                  appender.rolling.policies.size.size: 10MB
+                  appender.console.filter.threshold.level: fatal
+                  logger.2.name: Events.Bundle
+                  appender.rolling.name: Platform.RollingLogFile
+                  rootLogger.appenderRef.rolling.ref: Platform.RollingLogFile
+                  logger.4.name: Events.Service
+                  rootLogger.level: info
+                  logger.6.name: org.apache.camel
+                  logger.8.name: org.eclipse.gemini.blueprint
+                  appender.rolling.layout.type: PatternLayout
+                  appender.console.target: SYSTEM_OUT
+                  status: error
+                  appender.rolling.strategy.type: DefaultRolloverStrategy
+                  appender.console.layout.pattern: '%date{DEFAULT} %-5level [%-60.60logger{3.1.}]%notEmpty{[%mdc{osgi.bundleId}]}%notEmpty{[%mdc{osgi.service}]} - %message%n'
+                  appender.rolling.layout.pattern: '%date{DEFAULT} %-5level [%-60.60logger{3.1.}]%notEmpty{[%mdc{osgi.bundleId}]}%notEmpty{[%mdc{osgi.service}]} - %message%n'
+                  appender.rolling.filePattern: /opt/softwareag/profiles/MWS_default/logs/sag-osgi-%i.log.gz
+                  rootLogger.appenderRef.console.ref: Platform.Console
+                  appender.console.type: Console
+                  appender.rolling.policies.type: Policies
+                  logger.1.name: com.softwareag
+                  appender.rolling.strategy.max: '10'
+                  appender.console.filter.threshold.type: ThresholdFilter
+                  logger.3.name: Events.Framework
+                  logger.5.name: org.apache.shiro
+              COMMON-SYSPROPS:
+                COMMON-SYSPROPS:
+                  javax.net.ssl.trustStoreType: '%JAVA_TRUSTSTORETYPE%'
+                  javax.net.ssl.keyStorePassword: '%JAVA_KEYSTORE_PASSWORD%'
+                  javax.net.ssl.keyStore: '"%JAVA_KEYSTORE%"'
+                  javax.net.ssl.keyStoreType: '%JAVA_KEYSTORETYPE%'
+                  sun.security.krb5.debug: 'false'
+                  javax.net.ssl.trustStorePassword: '%JAVA_TRUSTSTORE_PASSWORD%'
+                  axisclient.MaxTotalConnections: '100'
+                  Log4jContextSelector: org.apache.logging.log4j.core.selector.BasicContextSelector
+                  osgi.install.area.stripquotes: 'TRUE'
+                  osgi.noShutdown: 'true'
+                  server.name: '%SERVER_NAME%'
+                  javax.net.ssl.trustStore.stripquotes: 'TRUE'
+                  log4j2.disable.jmx: 'true'
+                  javax.net.ssl.trustStoreType.stripquotes: 'TRUE'
+                  javax.security.auth.useSubjectCredsOnly: 'false'
+                  log4j.configurationFile: '"/opt/softwareag/profiles/MWS_default/configuration/logging/log4j2.properties"'
+                  axisclient.DefaultMaxConnectionsPerHost: '10'
+                  java.util.logging.manager: com.softwareag.platform.jul.proxy.ProxyLogManager
+                  log4j.configurationFile.stripquotes: 'TRUE'
+                  java.io.tmpdir.stripquotes: 'TRUE'
+                  javax.net.ssl.trustStore: '"%JAVA_TRUSTSTORE%"'
+                  javax.net.ssl.keyStore.stripquotes: 'TRUE'
+                  eclipse.ignoreApp: 'true'
+                  portal.home: '"%PORTAL_HOME%"'
+                  java.awt.headless: 'true'
+                  portal.node.name: '%NODE_NAME%'
+                  java.io.tmpdir: '"%SERVER_HOME%/temp"'
+                  portal.home.stripquotes: 'TRUE'
+                  file.encoding: '%FILE_ENCODING%'
+                  osgi.install.area: '"%OSGI_INSTALL_AREA%"'
+              COMMON-JAVASYSPROPS:
+                COMMON-JAVASYSPROPS:
+                  javax.net.ssl.trustStoreType: '%JAVA_TRUSTSTORETYPE%'
+                  javax.net.ssl.keyStorePassword: '%JAVA_KEYSTORE_PASSWORD%'
+                  javax.net.ssl.keyStore: '"%JAVA_KEYSTORE%"'
+                  javax.net.ssl.keyStoreType: '%JAVA_KEYSTORETYPE%'
+                  sun.security.krb5.debug: 'false'
+                  javax.net.ssl.trustStorePassword: '%JAVA_TRUSTSTORE_PASSWORD%'
+                  axisclient.MaxTotalConnections: '100'
+                  Log4jContextSelector: org.apache.logging.log4j.core.selector.BasicContextSelector
+                  osgi.install.area.stripquotes: 'TRUE'
+                  osgi.noShutdown: 'true'
+                  server.name: '%SERVER_NAME%'
+                  javax.net.ssl.trustStore.stripquotes: 'TRUE'
+                  log4j2.disable.jmx: 'true'
+                  javax.net.ssl.trustStoreType.stripquotes: 'TRUE'
+                  javax.security.auth.useSubjectCredsOnly: 'false'
+                  log4j.configurationFile: '"/opt/softwareag/profiles/MWS_default/configuration/logging/log4j2.properties"'
+                  axisclient.DefaultMaxConnectionsPerHost: '10'
+                  java.util.logging.manager: com.softwareag.platform.jul.proxy.ProxyLogManager
+                  log4j.configurationFile.stripquotes: 'TRUE'
+                  java.io.tmpdir.stripquotes: 'TRUE'
+                  javax.net.ssl.trustStore: '"%JAVA_TRUSTSTORE%"'
+                  javax.net.ssl.keyStore.stripquotes: 'TRUE'
+                  eclipse.ignoreApp: 'true'
+                  portal.home: '"%PORTAL_HOME%"'
+                  java.awt.headless: 'true'
+                  portal.node.name: '%NODE_NAME%'
+                  java.io.tmpdir: '"%SERVER_HOME%/temp"'
+                  portal.home.stripquotes: 'TRUE'
+                  file.encoding: '%FILE_ENCODING%'
+                  osgi.install.area: '"%OSGI_INSTALL_AREA%"'
+              COMMON-MEMORY:
+                COMMON-MEMORY:
+                  InitSize: '256'
+                  MaxSize: '1024'
+              COMMON-PROXY:
+                COMMON-PROXY-ALL:
+                  '@alias': ALL
+                  Enabled: 'false'
+                  Protocol: ALL
+                  Host: ${osgi-mws_default.common-proxy-all.host}
+            MwsProgramFiles-default:
+              COMMON-LOCAL-USERS:
+                COMMON-LOCAL-USERS-DeletedItems:
+                  '@id': DeletedItems
+                  Password: '${mwsprogramfiles-default.common-local-users-deleteditems.password}'
+                  Enabled: 'false'
+                  FirstName: Deleted Items
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000004767
+                COMMON-LOCAL-USERS-SysAdmin:
+                  '@id': SysAdmin
+                  Password: '${mwsprogramfiles-default.common-local-users-sysadmin.password}'
+                  Enabled: 'true'
+                  FirstName: Sys Admin
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000000001
+                COMMON-LOCAL-USERS-WEBM-CLUSTERUSER:
+                  '@id': WEBM_CLUSTERUSER
+                  Password: '${mwsprogramfiles-default.common-local-users-webm-clusteruser.password}'
+                  Enabled: 'true'
+                  FirstName: webMethods Cluster
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000002671
+                COMMON-LOCAL-USERS-WEBM-SYSUSER:
+                  '@id': WEBM_SYSUSER
+                  Password: '${mwsprogramfiles-default.common-local-users-webm-sysuser.password}'
+                  Enabled: 'true'
+                  FirstName: webMethods System
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000002365
+                COMMON-LOCAL-USERS-Designer:
+                  '@id': Designer
+                  Password: '${mwsprogramfiles-default.common-local-users-designer.password}'
+                  Enabled: 'true'
+                  FirstName: Designer
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000002366
+                COMMON-LOCAL-USERS-Administrator:
+                  '@id': Administrator
+                  Password: '${mwsprogramfiles-default.common-local-users-administrator.password}'
+                  Enabled: 'true'
+                  FirstName: My webMethods Administrator
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000002649
+                COMMON-LOCAL-USERS-Guest:
+                  '@id': Guest
+                  Password: '${mwsprogramfiles-default.common-local-users-guest.password}'
+                  Enabled: 'false'
+                  FirstName: Guest
+                  LastName: ''
+                  Email: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': uri
+                      $: /directory/system/user/meta/default/user/0000002276
+              COMMON-TRUSTSTORES:
+                COMMON-TRUSTSTORES:
+                  Truststore:
+                    '@alias': default
+                    Type: ${mwsprogramfiles-default.common-truststores.truststore.type}
+                    Location: ${mwsprogramfiles-default.common-truststores.truststore.location}
+                    Password: '${mwsprogramfiles-default.common-truststores.truststore.password}'
+              COMMON-VARS:
+                COMMON-VARS-jcr-workspaceName:
+                  Variable:
+                    '@key': jcr/workspaceName
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-jcr-workspacename.variable.$}
+                COMMON-VARS-csp-default-port:
+                  Variable:
+                    '@key': csp/default/port
+                    '@secure': 'false'
+                    '@type': java.lang.Integer
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-port.variable.$}
+                COMMON-VARS-csp-default-username:
+                  Variable:
+                    '@key': csp/default/username
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-username.variable.$}
+                COMMON-VARS-wsclient-endpointAddress:
+                  Variable:
+                    '@key': wsclient-endpointAddress
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-wsclient-endpointaddress.variable.$}
+                COMMON-VARS-csp-default-webreader-url:
+                  Variable:
+                    '@key': csp/default/webreader-url
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-webreader-url.variable.$}
+                COMMON-VARS-csp-default-password:
+                  Variable:
+                    '@key': csp/default/password
+                    '@secure': 'true'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-password.variable.$}
+                COMMON-VARS-wsclient-password:
+                  Variable:
+                    '@key': wsclient-password
+                    '@secure': 'true'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-wsclient-password.variable.$}
+                COMMON-VARS-jcr-systemPassword:
+                  Variable:
+                    '@key': jcr/systemPassword
+                    '@secure': 'true'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-jcr-systempassword.variable.$}
+                COMMON-VARS-jcr-systemUserId:
+                  Variable:
+                    '@key': jcr/systemUserId
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-jcr-systemuserid.variable.$}
+                COMMON-VARS-wsclient-requiresAuth:
+                  Variable:
+                    '@key': wsclient-requiresAuth
+                    '@secure': 'false'
+                    '@type': java.lang.Boolean
+                    $: ${mwsprogramfiles-default.common-vars-wsclient-requiresauth.variable.$}
+                COMMON-VARS-wsclient-socketTimeout:
+                  Variable:
+                    '@key': wsclient-socketTimeout
+                    '@secure': 'false'
+                    '@type': java.lang.Integer
+                    $: ${mwsprogramfiles-default.common-vars-wsclient-sockettimeout.variable.$}
+                COMMON-VARS-csp-default-streaming-port:
+                  Variable:
+                    '@key': csp/default/streaming-port
+                    '@secure': 'false'
+                    '@type': java.lang.Integer
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-streaming-port.variable.$}
+                COMMON-VARS-csp-default-host:
+                  Variable:
+                    '@key': csp/default/host
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-host.variable.$}
+                COMMON-VARS-wsclient-username:
+                  Variable:
+                    '@key': wsclient-username
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-wsclient-username.variable.$}
+                COMMON-VARS-csp-default-name:
+                  Variable:
+                    '@key': csp/default/name
+                    '@secure': 'false'
+                    '@type': java.lang.String
+                    $: ${mwsprogramfiles-default.common-vars-csp-default-name.variable.$}
+              COMMON-KERBEROS:
+                COMMON-KERBEROS:
+                  Name: Kerberos
+                  Realm: ''
+                  Kdc: ''
+                  ExtendedProperties:
+                    Property:
+                    - '@name': sun.security.krb5.debug
+                      $: 'false'
+                    - '@name': javax.security.auth.useSubjectCredsOnly
+                      $: 'false'
+              COMMON-SMTP:
+                COMMON-SMTP:
+                  Host: ${mwsprogramfiles-default.common-smtp.host}
+                  PortNumber: ${mwsprogramfiles-default.common-smtp.portnumber}
+                  TLS: NONE
+                  User: ''
+                  Password: '${mwsprogramfiles-default.common-smtp.password}'
+                  From:
+                    Name: My webMethods Server
+                    Email: mwsNotification@webmethods.com
+                  ExtendedProperties:
+                    Property:
+                    - '@name': skinID
+                      $: /meta/default/wm_xt_skin/0000002631
+                    - '@name': mail.transport.protocol
+                      $: smtp
+                    - '@name': mail.smtp.connectiontimeout
+                      $: '60000'
+                    - '@name': admin.email.address
+                      $: Administrator@webmethods.com
+                    - '@name': mail.smtp.timeout
+                      $: '60000'
+                    - '@name': mail.debug
+                      $: 'false'
+              COMMON-ADMINUI:
+                COMMON-ADMINUI: |
+                  http://is.internal.usgovcloudapp.net:8585/
+              COMMON-CLUSTER:
+                COMMON-CLUSTER:
+                  Enabled: 'true'
+                  Name: MWS Cluster
+                  Servers:
+                    Server:
+                      '@name': is.internal.usgovcloudapp.net-node10986
+                      URL: http://is.internal.usgovcloudapp.net:8585
+                      ExtendedProperties:
+                        Property:
+                        - '@name': autodeploy
+                          $: 'true'
+                        - '@name': search
+                          $: 'true'
+                        - '@name': taskengine
+                          $: 'true'
+                        - '@name': notification
+                          $: 'true'
+                  ExtendedProperties:
+                    Property:
+                    - '@name': LoadBalancerHost
+                      $: localhost
+                    - '@name': LoadBalancerHttpPort
+                      $: '8585'
+                    - '@name': contextPath
+                    - '@name': clusterId
+                      $: '-2125666475'
+              COMMON-KEYSTORES:
+                COMMON-KEYSTORES:
+                  Keystore:
+                    '@alias': default
+                    Type: ${mwsprogramfiles-default.common-keystores.keystore.type}
+                    Location: ${mwsprogramfiles-default.common-keystores.keystore.location}
+                    Password: '${mwsprogramfiles-default.common-keystores.keystore.password}'
+              COMMON-JDBC:
+                COMMON-JDBC-default:
+                  Pool:
+                    '@primary': 'true'
+                    '@alias': '1'
+                    Name: default
+                    Description: Default
+                    MinSize: '0'
+                    MaxSize: '100'
+                    MaxIdleTime: '60'
+                    CacheStatements: 'false'
+                    DatabaseServer:
+                      '@type': SQLSERVER
+                      Database: ${mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.database}
+                      URL: ${mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.url}
+                      User: ${mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.user}
+                      Password: '${mwsprogramfiles-default.common-jdbc-default.pool.databaseserver.password}'
+                    Driver:
+                      Class: com.wm.dd.jdbc.sqlserver.SQLServerDriver
+                    ExtendedProperties:
+                      Property:
+                      - '@name': CLEANUPPERIOD
+                        $: '10'
+                      - '@name': TESTSQL
+                        $: SELECT COUNT(*) FROM TBLTHING WHERE IDTHING = 1
+                      - '@name': SQLWORKERCLASS
+                        $: com.webmethods.portal.service.sql.core.BaseSqlWorker
+                      - '@name': CONNPROVIDERCLASS
+                        $: com.webmethods.portal.service.sql.core.provider.pool.PooledConnectionProvider
+              COMMON-PORTS:
+                COMMON-PORTS-HTTP:
+                  Port:
+                    '@primary': 'true'
+                    '@alias': http
+                    Enabled: ${mwsprogramfiles-default.common-ports-http.port.enabled}
+                    Number: ${mwsprogramfiles-default.common-ports-http.port.number}
+                    Protocol: http
+                    BindAddress: ${mwsprogramfiles-default.common-ports-http.port.bindaddress}
+                    ExtendedProperties:
+                      Property:
+                      - '@name': contextPath
+                        $: ''
+                COMMON-PORTS-HTTPS:
+                  Port:
+                    '@primary': 'true'
+                    '@alias': https
+                    Enabled: ${mwsprogramfiles-default.common-ports-https.port.enabled}
+                    Number: ${mwsprogramfiles-default.common-ports-https.port.number}
+                    Protocol: https
+                    BindAddress: ${mwsprogramfiles-default.common-ports-https.port.bindaddress}
+                    SSL:
+                      ClientAuth: REQUEST_CERTIFICATE
+                      KeystoreAlias: default
+                      TruststoreAlias: default
+                    ExtendedProperties:
+                      Property:
+                      - '@name': contextPath
+                        $: ''
+      TNPortal:
+        OSGI-MWS_default:
+          configuration:
+            TNPortal-default:
+              TN-SERVER-CONFIGURATIONS:
+                Localhost:
+                  '@name': Localhost
+                  host: localhost
+                  port: '5555'
+                  secured: 'false'
+    fixes: ${fixes}

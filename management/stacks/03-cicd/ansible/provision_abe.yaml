@@ -1,0 +1,43 @@
+---
+
+################################################################
+## load the needed vars
+################################################################
+
+- name: Load vars
+  hosts: "*"
+  tasks:
+    - name: Include vars
+      include_vars:
+        file: "./vars/$(stackid)_common.yaml"
+  tags:
+    - always
+
+################################################################
+## Integration server runtime
+################################################################
+
+- import_playbook: sagenv-common-webmethods.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)jenkins
+    cce_provisioning_template: abe/template-runtime-aliasmappingboot.yaml
+    cce_provisioning_properties: abe-runtime-aliasmappingboot
+    cce_provisioning_template_params:
+      - name: "repo.product"
+        value: "{{ cce_provisioning_products_repo_is }}"
+      - name: "repo.fix"
+        value: "{{ cce_provisioning_fixes_repo_is }}"
+      - name: "products.fixes"
+        value: "{{ cce_provisioning_fixes_apply_isruntime }}"
+  tags:
+    - install
+    - install-runtime
+
+- import_playbook: sagenv-common-webmethods-postinstall.yaml
+  vars:
+    cce_provisioning_inventory_hosts_pattern: $(stackid)jenkins
+    cce_provisioning_installed_product_names: abe
+  tags:
+    - install
+    - install-runtime
+    - install-runtime-postinstall

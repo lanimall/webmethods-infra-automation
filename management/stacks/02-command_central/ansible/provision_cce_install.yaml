@@ -1,0 +1,10 @@
+---
+
+################################################################
+## install command central with custom var file
+################################################################
+
+- import_playbook: sagenv-stack-cce-install.yaml
+  vars:
+    cce_provisioning_include_files: 
+      - "./vars/$(stackid)_common.yaml"
