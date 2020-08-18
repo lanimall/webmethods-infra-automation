@@ -1,0 +1,20 @@
+[all_linux:children]
+$(stackid)testserver
+$(stackid)buildserver
+
+[all_webmethods:children]
+$(stackid)testserver
+$(stackid)buildserver
+
+[integration:children]
+$(stackid)testserver
+$(stackid)buildserver
+
+[jenkins:children]
+$(stackid)buildserver
+
+[$(stackid)buildserver]
+$(stackid)buildserver_1 ansible_host=162.0.96.78 ip=162.0.96.78 fqdn=ip-162-0-96-78.us-east-2.compute.internal
+
+[$(stackid)testserver]
+$(stackid)testserver_1 ansible_host=162.0.96.9 ip=162.0.96.9 fqdn=ip-162-0-96-9.us-east-2.compute.internal

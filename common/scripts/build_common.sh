@@ -64,7 +64,7 @@ function build_ansible {
         fi 
         
         ##copy + replace tokens in the inventory file
-        copyfiles $THIS_ANSIBLE/inventory $BUILD_ANSIBLE/inventory $stackname $envtarget "true" "false" "^.*[_]$envtarget[_].*$"
+        copyfiles $THIS_ANSIBLE/inventory $BUILD_ANSIBLE/inventory $stackname $envtarget "true" "false" "^.*$envtarget.*$"
     fi
 }
 

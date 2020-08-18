@@ -1,0 +1,39 @@
+[all_linux:children]
+$(stackid)apigateway
+$(stackid)apigwinternaldatastore
+$(stackid)apigwterracotta
+$(stackid)apiportal
+
+[all_webmethods:children]
+$(stackid)apigateway
+$(stackid)apigwinternaldatastore
+$(stackid)apigwterracotta
+$(stackid)apiportal
+
+[apigateway:children]
+$(stackid)apigateway
+
+[terracotta:children]
+$(stackid)apigwterracotta
+
+[apigwinternaldatastore:children]
+$(stackid)apigwinternaldatastore
+
+[apiportal:children]
+$(stackid)apiportal
+
+[$(stackid)apigateway]
+$(stackid)apigateway_1 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+$(stackid)apigateway_2 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+
+[$(stackid)apigwinternaldatastore]
+$(stackid)apigateway_internaldatastore_1 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+$(stackid)apigateway_internaldatastore_2 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+$(stackid)apigateway_internaldatastore_3 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+
+[$(stackid)apigwterracotta]
+$(stackid)apigateway_terracotta_1 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+$(stackid)apigateway_terracotta_2 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns
+
+[$(stackid)apiportal]
+$(stackid)apiportal_1 ansible_host=XX.XX.XX.XX ip=XX.XX.XX.XX fqdn=some.internal.dns

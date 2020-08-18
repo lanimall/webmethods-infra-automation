@@ -1,0 +1,8 @@
+[all_linux:children]
+commandcentral
+
+[all_webmethods:children]
+commandcentral
+
+[commandcentral]
+$(stackid)cce_1 ansible_host=162.0.96.123 ip=162.0.96.123 fqdn=ip-162-0-96-123.us-east-2.compute.internal

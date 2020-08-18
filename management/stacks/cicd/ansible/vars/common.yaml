@@ -1,0 +1,54 @@
+## cce_provisioning LOCAL paths on management server
+cce_provisioning_code_localpath: ~/webmethods_infra_samples/webmethods-cce/
+cce_provisioning_content_localpath: /opt/sag_content/
+
+## needed to use the service role
+product_version_major: 10
+product_version_minor: 5
+product_version_full: "{{ product_version_major }}{{ product_version_minor }}"
+
+cce_provisioning_inventory_hosts_property: fqdn
+cce_provisioning_inventory_aliases_property: ""
+cce_provisioning_inventory_aliasmapping_delimiter: "_"
+cce_provisioning_inventory_aliasmapping_prefix: "{{ cce_provisioning_inventory_hosts_pattern }}"
+
+###########################################################
+################ Products / Fixes Repositories to use
+###########################################################
+
+cce_provisioning_products_repo_sdc: "webMethods-{{ product_version_major }}.{{ product_version_minor }}"
+cce_provisioning_fixes_repo_sdc: "Empower"
+
+cce_provisioning_products_repo_is: "softwareag_105_cicdtools"
+cce_provisioning_fixes_repo_is: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_is: "{{ cce_provisioning_products_repo_is }}_fixes"
+
+cce_provisioning_products_repo_deployer: "softwareag_105_cicdtools"
+cce_provisioning_fixes_repo_deployer: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_deployer: "{{ cce_provisioning_products_repo_deployer }}_fixes"
+
+cce_provisioning_products_repo_abe: "softwareag_105_cicdtools"
+cce_provisioning_fixes_repo_abe: "{{ cce_provisioning_fixes_repo_sdc }}"
+#cce_provisioning_fixes_repo_abe: "{{ cce_provisioning_products_repo_abe }}_fixes"
+
+##################################################
+################ Fixes to apply
+##################################################
+
+cce_provisioning_fixes_apply_isruntime: "ALL"
+cce_provisioning_fixes_apply_deployer: "ALL"
+cce_provisioning_fixes_apply_abe: "ALL"
+
+##################################################
+################ Deployer Servers details
+##################################################
+
+webmethods_deployer_is_instance_name: "default"
+
+##################################################
+################ Jenkins details
+##################################################
+
+jenkins_hostname_fqdn: "jenkins1.management.saggov.local"
+jenkins_java_options: "-Djenkins.install.runSetupWizard=false -Dorg.apache.commons.jelly.tags.fmt.timeZone=America/New_York"
+jenkins_administrator_username: "jenkinsadmin"

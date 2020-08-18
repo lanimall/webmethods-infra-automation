@@ -1,0 +1,14 @@
+[all_linux:children]
+$(stackid)bastion_linux
+
+[all_windows:children]
+$(stackid)bastion_windows
+
+[all_bastion:children]
+$(stackid)bastion_linux
+$(stackid)bastion_windows
+
+[$(stackid)bastion_linux]
+$(stackid)bastionlnx_1 ansible_host=162.0.32.7 ip=162.0.32.7 fqdn=ip-162-0-32-7.us-east-2.compute.internal
+
+[$(stackid)bastion_windows]

@@ -12,7 +12,7 @@ SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
 ## Args
 ENVTARGET="$1"
-APP_NAME="saggov_shared_management_azure"
+APP_NAME="webmethods_infra_samples"
 
 ## validate the env values and exit if invalid
 validate_args_env $ENVTARGET
@@ -26,7 +26,7 @@ fi
 ## build appid for the env
 APPID=$(build_token_value $APP_NAME $ENVTARGET)
 
-CONFIGS_BASE_DIR=$HOME/mydevsecrets/$APP_NAME/configs/$ENVTARGET
+CONFIGS_BASE_DIR=$HOME/mydevsecrets/$APP_NAME/aws/management/$ENVTARGET/resources
 BASTION_SSH_PRIV_KEY_PATH=$CONFIGS_BASE_DIR/certs/ssh/sshkey_id_rsa_bastion
 SETENV_BASTION_PATH=$CONFIGS_BASE_DIR/envs/setenv-bastion.sh
 
@@ -63,7 +63,7 @@ if [ "x$BASTION_LINUX_HOST_USER" = "x" ]; then
 fi
 
 ##rebuild project
-/bin/sh build.sh $ENVTARGET
+/bin/sh build.sh $ENVTARGET $APP_NAME
 
 ##sync built project
 echo "Sending files to $BASTION_LINUX_HOST_USER@$BASTION_LINUX_HOST..."

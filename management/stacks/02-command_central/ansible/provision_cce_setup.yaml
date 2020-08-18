@@ -1,7 +1,0 @@
----
-
-- import_playbook: sagenv-tools-cce-set-custom-configs.yaml
-  vars:
-    cce_provisioning_custom_config_path: "./vars/$(stackid)_common.yaml"
-
-- import_playbook: sagenv-tools-cce-create-secrets.yaml
